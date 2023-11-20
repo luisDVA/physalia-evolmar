@@ -81,7 +81,7 @@
     "href": "slides/evolmar-tidyverse.html#packages",
     "title": "Hands-On Data Manipulation and Visualization with the tidyverse and ggplot2",
     "section": "Packages 📦",
-    "text": "Packages 📦\nOut of the box, R is ready for most statistical analyses and data visualization task. However, &gt; 20,000 additional packages exist to expand the capabilities of R.\nInstalling packages:\ninstall.packages() for CRAN packages, remotes for other sources\nLoading packages:\nlibrary() or the RStudio packages pane"
+    "text": "Packages 📦\nOut of the box, R is ready for most statistical analyses and data visualization tasks. However, &gt; 20,000 additional packages exist to expand the capabilities of R.\nInstalling packages:\ninstall.packages() for CRAN packages, remotes for other sources\nLoading packages:\nlibrary() or the RStudio packages pane"
   },
   {
     "objectID": "slides/evolmar-tidyverse.html#course-setup",

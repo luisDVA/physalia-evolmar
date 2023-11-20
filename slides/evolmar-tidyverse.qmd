@@ -183,7 +183,7 @@ An educator's perspective of the tidyverse\
 
 ## Packages 📦
 
-Out of the box, R is ready for most statistical analyses and data visualization task. However, > 20,000 additional packages exist to expand the capabilities of R.
+Out of the box, R is ready for most statistical analyses and data visualization tasks. However, > 20,000 additional packages exist to expand the capabilities of R.
 
 ### Installing packages:
 `install.packages()` for CRAN packages, `remotes` for other sources
