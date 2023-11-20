@@ -1,0 +1,4748 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.3.450">
+
+  <meta name="author" content="Luis D. Verde Arregoitia">
+  <title>Evolmar tidyverse course 2023 - Hands-On Data Manipulation and Visualization with the tidyverse and ggplot2</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #000000; background-color: #ffffff; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #000000; } /* Normal */
+    code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+    code span.an { color: #ca60ca; } /* Annotation */
+    code span.at { color: #0057ae; } /* Attribute */
+    code span.bn { color: #b08000; } /* BaseN */
+    code span.bu { color: #644a9b; } /* BuiltIn */
+    code span.cf { color: #000000; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #924c9d; } /* Char */
+    code span.cn { color: #aa5500; } /* Constant */
+    code span.co { color: #898887; } /* Comment */
+    code span.cv { color: #0095ff; } /* CommentVar */
+    code span.do { color: #607880; } /* Documentation */
+    code span.dt { color: #0057ae; } /* DataType */
+    code span.dv { color: #b08000; } /* DecVal */
+    code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+    code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+    code span.fl { color: #b08000; } /* Float */
+    code span.fu { color: #644a9b; } /* Function */
+    code span.im { color: #644a9b; } /* Import */
+    code span.in { color: #b08000; } /* Information */
+    code span.kw { color: #000000; font-weight: bold; } /* Keyword */
+    code span.op { color: #000000; } /* Operator */
+    code span.ot { color: #006e28; } /* Other */
+    code span.pp { color: #006e28; } /* Preprocessor */
+    code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+    code span.sc { color: #ff5500; } /* SpecialChar */
+    code span.ss { color: #ff5500; } /* SpecialString */
+    code span.st { color: #bf0303; } /* String */
+    code span.va { color: #0057ae; } /* Variable */
+    code span.vs { color: #bf0303; } /* VerbatimString */
+    code span.wa { color: #bf0303; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Hands-On Data Manipulation and Visualization with the tidyverse and ggplot2</h1>
+  <p class="subtitle">Physalia Courses Online - Evolmar 2023</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Luis D. Verde Arregoitia 
+</div>
+</div>
+</div>
+
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="imgs/luisbb.jpg" style="width:50.0%"><br>
+<a href="https://twitter.com/LuisDVerde"><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg> @LuisDVerde</a><br>
+<a href="https://bsky.app/profile/luisdverde.bsky.social"><svg aria-hidden="true" role="img" viewbox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M0 336c0 79.5 64.5 144 144 144H512c70.7 0 128-57.3 128-128c0-61.9-44-113.6-102.4-125.4c4.1-10.7 6.4-22.4 6.4-34.6c0-53-43-96-96-96c-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32C167.6 32 96 103.6 96 192c0 2.7 .1 5.4 .2 8.1C40.2 219.8 0 273.2 0 336z"></path></svg> @LuisDVerde</a><br>
+<a href="https://github.com/luisdva"><svg aria-hidden="true" role="img" viewbox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg> @LuisDVA</a><br>
+<a href="https://liomys.mx"><svg aria-hidden="true" role="img" viewbox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"></path></svg> liomys.mx</a><br>
+<a href="mailto:luis@liomys.mx"><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:currentColor;overflow:visible;position:relative;"><path d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z"></path></svg> luis@liomys.mx</a></p>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>Mammalogy, macroecology, conservation</li>
+<li>Biogeography, using R as a GIS</li>
+<li>Data Science with R</li>
+<li>Certified Instructor - Posit(RStudio) &amp; The Carpentries<br>
+</li>
+<li>R user since 2011<br>
+</li>
+<li>R ‘blogger’ since 2015</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<h3 id="segment-1-introduction-to-the-tidyverse">Segment 1: Introduction to the tidyverse</h3>
+<ul>
+<li><p>What is tidy data and the <code>tidyverse</code>?</p></li>
+<li><p>Solving data manipulation challenges with <code>dplyr</code></p></li>
+<li><p>Creating tidy data with <code>tidyr</code></p></li>
+<li><p>Dates and times with <code>lubridate</code></p></li>
+<li><p>Dealing with categorical variables using <code>forcats</code></p></li>
+</ul>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<h3 id="segment-2-data-visualization-with-ggplot2">Segment 2: Data visualization with ggplot2</h3>
+<ul>
+<li><p>Graphics packages</p></li>
+<li><p>Introduction to <code>ggplot2</code></p></li>
+<li><p>Groups, geoms, stats and layers</p></li>
+<li><p>Scales, axes and legends</p></li>
+<li><p>Facets, colour themes and general themes</p></li>
+</ul>
+</section>
+<section>
+<section id="introduction-to-the-tidyverse" class="title-slide slide level1 center">
+<h1>Introduction to the tidyverse</h1>
+
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+
+<img data-src="imgs/data-science.png" class="r-stretch"><div style="text-align: right">
+<p><a href="https://r4ds.hadley.nz/intro">R for Data Science (2e)</a></p>
+</div>
+</section>
+<section id="tidy-data" class="slide level2">
+<h2>Tidy data</h2>
+<ul>
+<li><p>An accessible reformulation of existing principles and definitions from statistics and computer science, to help us structure our data for maximum usability.</p></li>
+<li><p>With tidy data, we can focus on our tasks and use our preferred tools smoothly while taking advantage of R’s vectorized nature.</p></li>
+</ul>
+<div style="text-align: right">
+<p>Hadley Wickham (2014)<br>
+<a href="https://www.jstatsoft.org/article/view/v059i10/">Tidy Data</a><br>
+Journal of Statistical Software</p>
+</div>
+</section>
+<section id="tidy-data-principles" class="slide level2">
+<h2>Tidy data principles</h2>
+<ul>
+<li><p>Arranged in a 2D data matrix with rows and columns</p></li>
+<li><p>Columns correspond to variables</p></li>
+<li><p>Rows correspond to observations</p></li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong></strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Variable:</strong> contains all values that measure the same underlying attribute<br>
+<strong>Observation:</strong> contains all values measured on the same unit across attributes</p>
+</div>
+</div>
+</div>
+<div style="text-align: right">
+<p><a href="https://jhudatascience.org/tidyversecourse/intro.html#principles-of-tidy-data">Principles of tidy data</a><br>
+Tidyverse Skills for Data Science<br>
+Wright et al.&nbsp;(2021)</p>
+</div>
+</section>
+<section id="tidy-data-1" class="slide level2">
+<h2>Tidy data</h2>
+<p>Each value in an observation will be paired with other values that appear in the same row</p>
+
+<img data-src="imgs/discounts.png" class="r-stretch"></section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p>Ready for input into plotting and modeling functions</p>
+
+<img data-src="imgs/tidyvarsmap.png" class="r-stretch quarto-figure-center"></section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+
+<img data-src="imgs/tidyverse_celestial.png" class="r-stretch quarto-figure-center"></section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<blockquote>
+<p>… an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. Its primary goal is to facilitate a conversation between a human and a computer about data</p>
+</blockquote>
+<div style="text-align: right">
+<p>Wickham et al.&nbsp;(2019)<br>
+<a href="https://www.theoj.org/joss-papers/joss.01686/10.21105.joss.01686.pdf">Welcome to the tidyverse</a><br>
+https://www.tidyverse.org/</p>
+</div>
+</section>
+<section id="tidyverse" class="slide level2">
+<h2>tidyverse</h2>
+<ul>
+<li><p>For the most common tasks: data import, manipulation, visualization, and programming</p></li>
+<li><p>Designed for easier learning and gradual engagement with additional pieces of the larger ecosystem</p></li>
+<li><p>Pipe-friendly</p></li>
+</ul>
+<div style="text-align: right">
+<p>Çetinkaya-Rundel et al.&nbsp;(2021)<br>
+An educator’s perspective of the tidyverse<br>
+<a href="https://arxiv.org/abs/2108.03510">arxiv.org/abs/2108.03510</a></p>
+</div>
+</section>
+<section id="packages" class="slide level2">
+<h2>Packages 📦</h2>
+<p>Out of the box, R is ready for most statistical analyses and data visualization task. However, &gt; 20,000 additional packages exist to expand the capabilities of R.</p>
+<h3 id="installing-packages">Installing packages:</h3>
+<p><code>install.packages()</code> for CRAN packages, <code>remotes</code> for other sources</p>
+<h3 id="loading-packages">Loading packages:</h3>
+<p><code>library()</code> or the RStudio packages pane</p>
+</section>
+<section id="course-setup" class="slide level2" data-background-color="#a4c5ff">
+<h2>Course setup</h2>
+<ul>
+<li>Course folder</li>
+<li>RStudio project</li>
+<li>Course scripts - <a href="course_scripts.zip">download here</a></li>
+<li>Check packages</li>
+</ul>
+</section>
+<section id="tidy-tools-for-preparing-transforming-and-restructuring-data" class="slide level2">
+<h2>tidy tools for preparing, transforming, and restructuring data</h2>
+<div class="columns">
+<div class="column" style="width:20%;">
+<p><img data-src="imgs/dplyrlogo.png"> <img data-src="imgs/tidyrlogo.png"></p>
+</div><div class="column" style="width:80%;">
+<p>Flexible, but developed around built-in features that support a particular way of doing things</p>
+<ul>
+<li>Hard to use incorrectly by accident</li>
+<li>Less code to achieve a goal</li>
+<li>Shared grammar and data structures</li>
+<li>Tasks split up across functions and packages</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="pipes" class="slide level2">
+<h2>Pipes</h2>
+<p>To perform multiple operations in sequence:</p>
+<div>
+<ul>
+<li class="fragment"><p>Nested code (results evaluated from the inside out)</p></li>
+<li class="fragment"><p>Intermediate objects (assign objects with intermediate results and pass to the next function in a sequence)</p></li>
+<li class="fragment"><p>Pipes (structure sequential operations left-to-right)</p></li>
+</ul>
+</div>
+</section>
+<section id="nested-code" class="slide level2">
+<h2>Nested code</h2>
+<p><br></p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-1_91485e16f230438e382f65553016de69">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">8</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">round</span>(<span class="fu">mean</span>(scores), <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.78</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="intermediate-objects" class="slide level2">
+<h2>Intermediate objects</h2>
+<p><br></p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-2_a52d8becaa9030b5486372341ec0a662">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>mn_scrs <span class="ot">&lt;-</span> <span class="fu">mean</span>(scores)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">round</span>(mn_scrs, <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.78</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="pipes-1" class="slide level2">
+<h2>Pipes</h2>
+<p><code>%&gt;%</code> in <code>magrittr</code>; <code>|&gt;</code> in R v &gt;= 4.1.0</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:30%;">
+<p>Left Hand Side<br>
+(LHS)</p>
+</div><div class="column" style="width:40%;">
+<p><code>pipe operator</code></p>
+</div><div class="column" style="width:30%;">
+<p>Right Hand Side<br>
+(RHS)</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Take an <strong>object</strong> on the <strong>Left Hand Side</strong> of the pipe and insert it into a <strong>function</strong> as an argument on the <strong>Right Hand Side</strong></p>
+<p>* By default, <strong>LHS</strong> is placed as the <strong>first</strong> argument in the call</p>
+</div>
+</section>
+<section id="pipes-2" class="slide level2">
+<h2>Pipes</h2>
+<ul>
+<li><p>Minimize the need for intermediate objects and nested code</p></li>
+<li><p>Make code readable</p></li>
+<li><p>Easy to add or remove steps</p></li>
+</ul>
+<blockquote>
+<p>Insert with <code>ctrl + shift + M</code></p>
+</blockquote>
+<div style="text-align: right">
+<p>Adolfo Álvarez (2021)<br>
+<a href="http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/">The (updated) history of the pipe operator in R</a></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p><br></p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-3_da5960f69a2d6706b9ff3ab79ccc2578">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>scores <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">mean</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.78</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<p><code>LHS |&gt; RHS(argument = 12)</code></p>
+<p><em>parses to</em></p>
+<p><code>RHS(LHS, argument = 12)</code></p>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p>with <code>magrittr</code> pipe</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-4_1a9a644889990874f51a53bb14790e36">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>scores <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">mean</span>() <span class="sc">%&gt;%</span>  </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.78</code></pre>
+</div>
+</div>
+<p>with base pipe</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-5_9cf7d6bf63be3d2117f98b1e4fcd0530">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>scores <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">mean</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">round</span>(<span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.78</code></pre>
+</div>
+</div>
+<blockquote>
+<p>IDEs can toggle which pipe to insert</p>
+</blockquote>
+<div style="text-align: right">
+<p>Isabella Velásquez (2022)<br>
+<a href="https://ivelasq.rbind.io/blog/understanding-the-r-pipe/">Understanding the native R pipe |&gt;</a></p>
+</div>
+</section>
+<section id="dplyr-for-data-manipulation" class="slide level2">
+<h2>📦 <code>dplyr</code> for data manipulation</h2>
+<ul>
+<li><p>Separate functions for the most common operations</p></li>
+<li><p>Intuitive, user-friendly functions for:</p>
+<ul>
+<li><p>Subsetting columns</p></li>
+<li><p>Subsetting rows</p></li>
+<li><p>Creating or modifying columns</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">sneakers</a></li><li><a href="#tabset-1-2">Data Setup</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-6_0f267d82f984d2eeac1137dc2f7aacf4">
+<div class="cell-output-display">
+
+<div id="nqgzyofhct" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nqgzyofhct table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nqgzyofhct thead, #nqgzyofhct tbody, #nqgzyofhct tfoot, #nqgzyofhct tr, #nqgzyofhct td, #nqgzyofhct th {
+  border-style: none;
+}
+
+#nqgzyofhct p {
+  margin: 0;
+  padding: 0;
+}
+
+#nqgzyofhct .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nqgzyofhct .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nqgzyofhct .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nqgzyofhct .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nqgzyofhct .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nqgzyofhct .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nqgzyofhct .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nqgzyofhct .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nqgzyofhct .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nqgzyofhct .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nqgzyofhct .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nqgzyofhct .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nqgzyofhct .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nqgzyofhct .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nqgzyofhct .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nqgzyofhct .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nqgzyofhct .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nqgzyofhct .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nqgzyofhct .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nqgzyofhct .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nqgzyofhct .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nqgzyofhct .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nqgzyofhct .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nqgzyofhct .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nqgzyofhct .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nqgzyofhct .gt_left {
+  text-align: left;
+}
+
+#nqgzyofhct .gt_center {
+  text-align: center;
+}
+
+#nqgzyofhct .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nqgzyofhct .gt_font_normal {
+  font-weight: normal;
+}
+
+#nqgzyofhct .gt_font_bold {
+  font-weight: bold;
+}
+
+#nqgzyofhct .gt_font_italic {
+  font-style: italic;
+}
+
+#nqgzyofhct .gt_super {
+  font-size: 65%;
+}
+
+#nqgzyofhct .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nqgzyofhct .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nqgzyofhct .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nqgzyofhct .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nqgzyofhct .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nqgzyofhct .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nqgzyofhct .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 21px;" scope="col" id="Name">Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 21px;" scope="col" id="Sport">Sport</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 21px;" scope="col" id="Price">Price</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 21px;" scope="col" id="Rating">Rating</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Boost 3000</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Running</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">99</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">HiSpeed</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Running</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">44</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Super2</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Trail</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">100</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">5</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Goal</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Football</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">119</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">3</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Goal2.0</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Football</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">79</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Airball Max</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Basketball</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">49</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Glide Best</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Running</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">55</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">5</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Outdoor King</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Trail</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">160</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">5</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">G90x</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Football</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">120</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Smith Pro</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Running</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">89</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">4</td></tr>
+    <tr><td headers="Name" class="gt_row gt_left" style="font-size: 21px;">Travel Low</td>
+<td headers="Sport" class="gt_row gt_left" style="font-size: 21px;">Basketball</td>
+<td headers="Price" class="gt_row gt_right" style="font-size: 21px;">89</td>
+<td headers="Rating" class="gt_row gt_right" style="font-size: 21px;">3</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-7_f5c67c06ef74b97f55bc90dd57df1315">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>sneakers <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>           <span class="sc">~</span>Name,       <span class="sc">~</span>Sport, <span class="sc">~</span>Price, <span class="sc">~</span>Rating,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="st">"Boost 3000"</span>,    <span class="st">"Running"</span>,    99L,      4L,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>       <span class="st">"HiSpeed"</span>,    <span class="st">"Running"</span>,    44L,      4L,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>        <span class="st">"Super2"</span>,      <span class="st">"Trail"</span>,   100L,      5L,</span>
+<span id="cb11-6"><a href="#cb11-6"></a>          <span class="st">"Goal"</span>,   <span class="st">"Football"</span>,   119L,      3L,</span>
+<span id="cb11-7"><a href="#cb11-7"></a>       <span class="st">"Goal2.0"</span>,   <span class="st">"Football"</span>,    79L,      4L,</span>
+<span id="cb11-8"><a href="#cb11-8"></a>   <span class="st">"Airball Max"</span>, <span class="st">"Basketball"</span>,    49L,      4L,</span>
+<span id="cb11-9"><a href="#cb11-9"></a>    <span class="st">"Glide Best"</span>,    <span class="st">"Running"</span>,    55L,      5L,</span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="st">"Outdoor King"</span>,      <span class="st">"Trail"</span>,   160L,      5L,</span>
+<span id="cb11-11"><a href="#cb11-11"></a>          <span class="st">"G90x"</span>,   <span class="st">"Football"</span>,   120L,      4L,</span>
+<span id="cb11-12"><a href="#cb11-12"></a>     <span class="st">"Smith Pro"</span>,    <span class="st">"Running"</span>,    89L,      4L,</span>
+<span id="cb11-13"><a href="#cb11-13"></a>    <span class="st">"Travel Low"</span>, <span class="st">"Basketball"</span>,    89L,      3L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="select" class="slide level2">
+<h2><code>select()</code></h2>
+<div class="columns">
+<div class="column" style="width:38%;">
+<h4 id="subset-variables">Subset variables</h4>
+<ul>
+<li>by name<br>
+</li>
+<li>by position<br>
+</li>
+<li>by type<br>
+</li>
+</ul>
+</div><div class="column" style="width:62%;">
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-8_0ad09d10450a1a00c4f96d297772502c">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sneakers <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">select</span>(Name, Sport) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">head</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  Name       Sport   
+  &lt;chr&gt;      &lt;chr&gt;   
+1 Boost 3000 Running 
+2 HiSpeed    Running 
+3 Super2     Trail   
+4 Goal       Football</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="mutate" class="slide level2">
+<h2><code>mutate()</code></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="create-and-modify-columns">Create and modify columns</h4>
+<ul>
+<li>create new<br>
+</li>
+<li>overwrite<br>
+</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-9_6a02bfc494d62a88d212854fc020e874">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>sneakers <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">select</span>(Name, Rating) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">mutate</span>(<span class="at">Rating=</span> Rating<span class="sc">*</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  Name       Rating
+  &lt;chr&gt;       &lt;dbl&gt;
+1 Boost 3000      8
+2 HiSpeed         8
+3 Super2         10
+4 Goal            6
+5 Goal2.0         8</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>We can control where the new column will appear with <code>.before</code> and <code>.after</code></p>
+</section>
+<section id="filter" class="slide level2">
+<h2><code>filter()</code></h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<h4 id="subset-rows">Subset rows</h4>
+<ul>
+<li>keep rows that meet a condition</li>
+</ul>
+</div><div class="column" style="width:52%;">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-10_cc6dd17503d6be3109a9fea6cdd0e9ba">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>sneakers <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">select</span>(Name, Sport, Rating) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">filter</span>(Rating <span class="sc">==</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  Name         Sport   Rating
+  &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
+1 Super2       Trail        5
+2 Glide Best   Running      5
+3 Outdoor King Trail        5</code></pre>
+</div>
+</div>
+</div>
+</div>
+<blockquote>
+<p><code>filter()</code> always needs a logical vector to keep/discard rows</p>
+</blockquote>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-11_9bd9bec5d87b1a7606becc0bb2827518">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>sneakers<span class="sc">$</span>Rating <span class="sc">==</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="data-manipulation-challenge" class="slide level2">
+<h2>Data manipulation challenge</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong></strong></p>
+</div>
+<div class="callout-content">
+<p>Before manipulating data, we need to create our tabular objects</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Import from files with <code>readr</code></li>
+<li>Load bundled data from a package with <code>data()</code></li>
+</ul>
+</section>
+<section id="data-manipulation-challenge-1" class="slide level2" data-background-color="#a4c5ff">
+<h2>Data manipulation challenge</h2>
+<h3 id="import-from-file">Import from file</h3>
+<ul>
+<li>Download the <code>possum.csv</code> file <a href="exampleData/possum.csv">here</a></li>
+<li>Import the file (using <code>read_csv()</code> from <code>readr</code>)</li>
+</ul>
+<h3 id="load-from-a-package">Load from a package</h3>
+<ul>
+<li>load the <code>openintro</code> package</li>
+<li>call a dataset with the <code>data()</code> function</li>
+<li>package datasets often have documentation (<code>?possum</code>)</li>
+</ul>
+</section>
+<section id="data-manipulation-challenge-2" class="slide level2" data-background-color="#a4c5ff">
+<h2>Data manipulation challenge</h2>
+<p>(separate tasks)</p>
+<ul>
+<li><p>Subset the possum data to keep only males from Victoria and discard the <em>site</em> column</p></li>
+<li><p>Add a column with the tail length column in inches</p></li>
+<li><p>Keep only sex, age, and site for females with head length &gt; 91 cm</p></li>
+<li><p>Suggest additional manipulations</p></li>
+</ul>
+</section>
+<section id="tidy-data-with-tidyr" class="slide level2">
+<h2>tidy data with <code>tidyr</code></h2>
+
+<img data-src="imgs/widelong.png" class="r-stretch quarto-figure-center"><div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="wide-data">Wide Data</h3>
+<p>Human-readable<br>
+Easier entry<br>
+Easier interactive editing</p>
+</div><div class="column" style="width:50%;">
+<h3 id="long-data">Long Data</h3>
+<p>Usually tidy<br>
+Analysis-ready<br>
+Maps well to graphic parameters</p>
+</div>
+</div>
+</section>
+<section id="pivoting-data" class="slide level2">
+<h2>Pivoting data</h2>
+<ul>
+<li>you may know these operations as <code>cast</code>, <code>melt</code>, <code>gather</code>, or <code>spread</code></li>
+</ul>
+
+<img data-src="imgs/pivotingintro.gif" class="r-stretch"></section>
+<section id="section-11" class="slide level2">
+<h2></h2>
+<p><br> wide to long: <code>pivot_longer()</code></p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-12_b224cff68d7a00b9413d99ee6b388c82">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">pivot_longer</span>(data, cols, names_to, values_to)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br> long to wide: <code>pivot_wider()</code></p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-13_99208335e8b56059c3a7c75cd53bd6de">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">pivot_longer</span>(data, cols,</span>
+<span id="cb21-2"><a href="#cb21-2"></a>             names_from, values_from)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="section-12" class="slide level2">
+<h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">dining</a></li><li><a href="#tabset-2-2">Data setup</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-15_be2fd81437910133754e887a77becd8c">
+<div class="cell-output-display">
+
+<div id="llyeotxqlf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#llyeotxqlf table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#llyeotxqlf thead, #llyeotxqlf tbody, #llyeotxqlf tfoot, #llyeotxqlf tr, #llyeotxqlf td, #llyeotxqlf th {
+  border-style: none;
+}
+
+#llyeotxqlf p {
+  margin: 0;
+  padding: 0;
+}
+
+#llyeotxqlf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #F4F4F9;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#llyeotxqlf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #F4F4F9;
+  border-bottom-width: 0;
+}
+
+#llyeotxqlf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #F4F4F9;
+  border-top-width: 0;
+}
+
+#llyeotxqlf .gt_heading {
+  background-color: #F4F4F9;
+  text-align: center;
+  border-bottom-color: #F4F4F9;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_col_heading {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#llyeotxqlf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#llyeotxqlf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#llyeotxqlf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#llyeotxqlf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#llyeotxqlf .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#llyeotxqlf .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#llyeotxqlf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#llyeotxqlf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#llyeotxqlf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#llyeotxqlf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#llyeotxqlf .gt_stub {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#llyeotxqlf .gt_stub_row_group {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#llyeotxqlf .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#llyeotxqlf .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#llyeotxqlf .gt_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#llyeotxqlf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#llyeotxqlf .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#llyeotxqlf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#llyeotxqlf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_footnotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#llyeotxqlf .gt_sourcenotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#llyeotxqlf .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#llyeotxqlf .gt_left {
+  text-align: left;
+}
+
+#llyeotxqlf .gt_center {
+  text-align: center;
+}
+
+#llyeotxqlf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#llyeotxqlf .gt_font_normal {
+  font-weight: normal;
+}
+
+#llyeotxqlf .gt_font_bold {
+  font-weight: bold;
+}
+
+#llyeotxqlf .gt_font_italic {
+  font-style: italic;
+}
+
+#llyeotxqlf .gt_super {
+  font-size: 65%;
+}
+
+#llyeotxqlf .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#llyeotxqlf .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#llyeotxqlf .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#llyeotxqlf .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#llyeotxqlf .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#llyeotxqlf .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#llyeotxqlf .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 24px;" scope="col" id="area_type">area_type</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 24px;" scope="col" id="district">district</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 24px;" scope="col" id="coffee_shops">coffee_shops</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 24px;" scope="col" id="fast_food">fast_food</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 24px;" scope="col" id="fish_chips">fish_chips</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="area_type" class="gt_row gt_left" style="font-size: 24px;">Residential</td>
+<td headers="district" class="gt_row gt_left" style="font-size: 24px;">South</td>
+<td headers="coffee_shops" class="gt_row gt_right" style="font-size: 24px;">2</td>
+<td headers="fast_food" class="gt_row gt_right" style="font-size: 24px;">3</td>
+<td headers="fish_chips" class="gt_row gt_right" style="font-size: 24px;">1</td></tr>
+    <tr><td headers="area_type" class="gt_row gt_left" style="font-size: 24px;">Commercial</td>
+<td headers="district" class="gt_row gt_left" style="font-size: 24px;">North</td>
+<td headers="coffee_shops" class="gt_row gt_right" style="font-size: 24px;">12</td>
+<td headers="fast_food" class="gt_row gt_right" style="font-size: 24px;">6</td>
+<td headers="fish_chips" class="gt_row gt_right" style="font-size: 24px;">4</td></tr>
+    <tr><td headers="area_type" class="gt_row gt_left" style="font-size: 24px;">Suburban</td>
+<td headers="district" class="gt_row gt_left" style="font-size: 24px;">South</td>
+<td headers="coffee_shops" class="gt_row gt_right" style="font-size: 24px;">2</td>
+<td headers="fast_food" class="gt_row gt_right" style="font-size: 24px;">4</td>
+<td headers="fish_chips" class="gt_row gt_right" style="font-size: 24px;">3</td></tr>
+    <tr><td headers="area_type" class="gt_row gt_left" style="font-size: 24px;">Rural</td>
+<td headers="district" class="gt_row gt_left" style="font-size: 24px;">East</td>
+<td headers="coffee_shops" class="gt_row gt_right" style="font-size: 24px;">0</td>
+<td headers="fast_food" class="gt_row gt_right" style="font-size: 24px;">2</td>
+<td headers="fish_chips" class="gt_row gt_right" style="font-size: 24px;">0</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/panel-chunk-dining_dbb28b34d53d1da3a2897dc7cae70e95">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dining <span class="ot">&lt;-</span> </span>
+<span id="cb22-2"><a href="#cb22-2"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb22-3"><a href="#cb22-3"></a>     <span class="sc">~</span>area_type, <span class="sc">~</span>district, <span class="sc">~</span>coffee_shops, <span class="sc">~</span>fast_food, <span class="sc">~</span>fish_chips,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="st">"Residential"</span>,   <span class="st">"South"</span>,            2L,         3L,          1L,</span>
+<span id="cb22-5"><a href="#cb22-5"></a>   <span class="st">"Commercial"</span>,   <span class="st">"North"</span>,           12L,         6L,          4L,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>     <span class="st">"Suburban"</span>,   <span class="st">"South"</span>,            2L,         4L,          3L,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>        <span class="st">"Rural"</span>,    <span class="st">"East"</span>,            0L,         2L,          0L</span>
+<span id="cb22-8"><a href="#cb22-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p><span style="font-size: 1.2em; text-align: center">Variables:</span></p>
+<p>area type</p>
+<p>district</p>
+<p>type of resturant</p>
+<p>number of restaurants</p>
+</section>
+<section id="wide-to-long" class="slide level2">
+<h2>Wide to long</h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-16_f445b43af0484d502afaf1e01894dfbb">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>dining_long <span class="ot">&lt;-</span> dining <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="at">cols =</span> <span class="fu">c</span>(coffee_shops, fast_food, fish_chips),</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="at">names_to =</span> <span class="st">"restaurant_type"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>    <span class="at">values_to =</span> <span class="st">"n_restaurants"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong><code>cols</code></strong> Which columns have data in their names</p>
+<p><strong><code>names_to</code></strong> Name for the new column to be created from the names of each <code>cols</code></p>
+<p><strong><code>values_to</code></strong> Name of the column to be created from the contents of the cells in <strong><code>cols</code></strong></p>
+</section>
+<section id="section-13" class="slide level2">
+<h2></h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-18_cc25755fe075e9be5477b1dbd95f5d42">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dining <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>    <span class="at">cols =</span> <span class="fu">c</span>(coffee_shops, fast_food, fish_chips),</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="at">names_to =</span> <span class="st">"restaurant_type"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="at">values_to =</span> <span class="st">"n_restaurants"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-14" class="slide level2">
+<h2></h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-19_d31dbe05d6da8e6e4df5fd6c8ff78ed8">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>dining <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">cols =</span> <span class="fu">c</span>(coffee_shops, fast_food, fish_chips),</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">names_to =</span> <span class="st">"restaurant_type"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="at">values_to =</span> <span class="st">"n_restaurants"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 4
+   area_type   district restaurant_type n_restaurants
+   &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;                   &lt;int&gt;
+ 1 Residential South    coffee_shops                2
+ 2 Residential South    fast_food                   3
+ 3 Residential South    fish_chips                  1
+ 4 Commercial  North    coffee_shops               12
+ 5 Commercial  North    fast_food                   6
+ 6 Commercial  North    fish_chips                  4
+ 7 Suburban    South    coffee_shops                2
+ 8 Suburban    South    fast_food                   4
+ 9 Suburban    South    fish_chips                  3
+10 Rural       East     coffee_shops                0
+11 Rural       East     fast_food                   2
+12 Rural       East     fish_chips                  0</code></pre>
+</div>
+</div>
+</section>
+<section id="long-to-wide" class="slide level2">
+<h2>Long to wide</h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-20_316d0d5b7c8de1167c922582102082d3">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>dining_long <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> restaurant_type, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>              <span class="at">values_from =</span> n_restaurants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong><code>names_from</code></strong> Which columns’ distinct values will be used for new <em>column names</em></p>
+<p><strong><code>values_from</code></strong> Which column has the <em>cell values</em> for the new output columns</p>
+</section>
+<section id="section-15" class="slide level2">
+<h2></h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-21_34a6118fa02d8e806c061a660fff6530">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>dining_long <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> restaurant_type, </span>
+<span id="cb28-3"><a href="#cb28-3"></a>              <span class="at">values_from =</span> n_restaurants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  area_type   district coffee_shops fast_food fish_chips
+  &lt;chr&gt;       &lt;chr&gt;           &lt;int&gt;     &lt;int&gt;      &lt;int&gt;
+1 Residential South               2         3          1
+2 Commercial  North              12         6          4
+3 Suburban    South               2         4          3
+4 Rural       East                0         2          0</code></pre>
+</div>
+</div>
+</section>
+<section id="practice---pivoting" class="slide level2" data-background-color="#a4c5ff">
+<h2>Practice - Pivoting</h2>
+<ul>
+<li><p>Load the dataset “<strong>arbuthnot</strong>” bundled with <code>openintro</code></p></li>
+<li><p>Identify the data structure and tidy the data</p></li>
+<li><p>pivot back to inital structure</p></li>
+</ul>
+</section>
+<section id="dates-and-times-with-the-lubridate" class="slide level2">
+<h2>Dates and times with the <code>lubridate</code></h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><img data-src="imgs/lubridatelogo.png"></p>
+</div><div class="column" style="width:70%;">
+<p>Working with dates and times (in general, and even in R) can be frustrating</p>
+</div>
+</div>
+<p><code>lubridate</code> provides objects and functions for intuitive parsing of dates and times with less ambiguity</p>
+<blockquote>
+<p>Easier temporal calculations (e.g.&nbsp;subtract dates, calculate periods of time, etc.)</p>
+</blockquote>
+</section>
+<section id="section-16" class="slide level2">
+<h2></h2>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-22_1a61e67879f0582d326f4f1f02f45dd8">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="co"># parse from text string to year/month/day</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>decdate <span class="ot">&lt;-</span>  <span class="fu">ymd</span>(<span class="st">"2010/12/21"</span>) </span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="fu">class</span>(decdate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Date"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">year</span>(decdate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2010</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">month</span>(decdate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">day</span>(decdate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">ymd</span>(<span class="st">"2023-11-20"</span>) <span class="sc">-</span> decdate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 4717 days</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="parsing-dates" class="slide level2" data-background-color="#a4c5ff">
+<h2>Parsing dates</h2>
+<ul>
+<li><p>Load the <code>birds</code> data from {openintro}</p></li>
+<li><p>Examine the <strong>date</strong> column</p></li>
+<li><p>Parse the date and create separate columns for month, day, and year</p></li>
+<li><p>Put mdy together in a new variable (hint: <code>make_date</code> function)</p></li>
+</ul>
+</section>
+<section id="factors-made-easy-with-forcats" class="slide level2">
+<h2>Factors made easy with <code>forcats</code></h2>
+<h3 id="categorical-variables">Categorical variables</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Fixed set of possible values (levels)</li>
+<li>Levels can be ordered (very useful for visualization)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="imgs/factor.jpg"></p>
+</div>
+</div>
+</section>
+<section id="factors" class="slide level2">
+<h2>Factors</h2>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-23_ad0843ddfcc17faab1812b43624dc68d">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">data</span>(fastfood,<span class="at">package =</span> <span class="st">"openintro"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="fu">head</span>(fastfood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+</section>
+<section id="factors-output" class="slide level2 output-location-slide"><h2>Factors</h2><div class="cell output-location-slide" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-23_ad0843ddfcc17faab1812b43624dc68d">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 17
+  restaurant item       calories cal_fat total_fat sat_fat trans_fat cholesterol
+  &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 Mcdonalds  Artisan G…      380      60         7       2       0            95
+2 Mcdonalds  Single Ba…      840     410        45      17       1.5         130
+3 Mcdonalds  Double Ba…     1130     600        67      27       3           220
+4 Mcdonalds  Grilled B…      750     280        31      10       0.5         155
+5 Mcdonalds  Crispy Ba…      920     410        45      12       0.5         120
+6 Mcdonalds  Big Mac         540     250        28      10       1            80
+# ℹ 9 more variables: sodium &lt;dbl&gt;, total_carb &lt;dbl&gt;, fiber &lt;dbl&gt;, sugar &lt;dbl&gt;,
+#   protein &lt;dbl&gt;, vit_a &lt;dbl&gt;, vit_c &lt;dbl&gt;, calcium &lt;dbl&gt;, salad &lt;chr&gt;</code></pre>
+</div>
+</div></section><section id="section-17" class="slide level2">
+<h2></h2>
+<p>Variable as character vector</p>
+<div class="big-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-24_9f53cd3fe72fff068fe53baef889e59e">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>fastfood<span class="sc">$</span>restaurant</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+</section>
+<section id="section-17-output" class="slide level2 output-location-slide"><h2></h2><div class="cell output-location-slide" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-24_9f53cd3fe72fff068fe53baef889e59e">
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+  [6] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [11] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [16] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [21] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [26] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [31] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [36] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [41] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [46] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [51] "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"   "Mcdonalds"  
+ [56] "Mcdonalds"   "Mcdonalds"   "Chick Fil-A" "Chick Fil-A" "Chick Fil-A"
+ [61] "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A"
+ [66] "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A"
+ [71] "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A"
+ [76] "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A"
+ [81] "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Chick Fil-A" "Sonic"      
+ [86] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+ [91] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+ [96] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[101] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[106] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[111] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[116] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[121] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[126] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[131] "Sonic"       "Sonic"       "Sonic"       "Sonic"       "Sonic"      
+[136] "Sonic"       "Sonic"       "Arbys"       "Arbys"       "Arbys"      
+[141] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[146] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[151] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[156] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[161] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[166] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[171] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[176] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[181] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[186] "Arbys"       "Arbys"       "Arbys"       "Arbys"       "Arbys"      
+[191] "Arbys"       "Arbys"       "Burger King" "Burger King" "Burger King"
+[196] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[201] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[206] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[211] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[216] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[221] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[226] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[231] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[236] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[241] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[246] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[251] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[256] "Burger King" "Burger King" "Burger King" "Burger King" "Burger King"
+[261] "Burger King" "Burger King" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[266] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[271] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[276] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[281] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[286] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[291] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[296] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen"
+[301] "Dairy Queen" "Dairy Queen" "Dairy Queen" "Dairy Queen" "Subway"     
+[306] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[311] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[316] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[321] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[326] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[331] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[336] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[341] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[346] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[351] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[356] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[361] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[366] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[371] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[376] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[381] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[386] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[391] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[396] "Subway"      "Subway"      "Subway"      "Subway"      "Subway"     
+[401] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[406] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[411] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[416] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[421] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[426] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[431] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[436] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[441] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[446] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[451] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[456] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[461] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[466] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[471] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[476] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[481] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[486] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[491] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[496] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[501] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[506] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  
+[511] "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"   "Taco Bell"  </code></pre>
+</div>
+</div></section><section id="section-18" class="slide level2">
+<h2></h2>
+<p>Make into factor</p>
+<div class="big-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-25_1952dd1e9cace18c28ba53248dd606eb">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">factor</span>(fastfood<span class="sc">$</span>restaurant)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+</section>
+<section id="section-18-output" class="slide level2 output-location-slide"><h2></h2><div class="cell output-location-slide" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-25_1952dd1e9cace18c28ba53248dd606eb">
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+  [7] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [13] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [19] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [25] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [31] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [37] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [43] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [49] Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds   Mcdonalds  
+ [55] Mcdonalds   Mcdonalds   Mcdonalds   Chick Fil-A Chick Fil-A Chick Fil-A
+ [61] Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A
+ [67] Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A
+ [73] Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A
+ [79] Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A Chick Fil-A
+ [85] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+ [91] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+ [97] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[103] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[109] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[115] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[121] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[127] Sonic       Sonic       Sonic       Sonic       Sonic       Sonic      
+[133] Sonic       Sonic       Sonic       Sonic       Sonic       Arbys      
+[139] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[145] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[151] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[157] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[163] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[169] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[175] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[181] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[187] Arbys       Arbys       Arbys       Arbys       Arbys       Arbys      
+[193] Burger King Burger King Burger King Burger King Burger King Burger King
+[199] Burger King Burger King Burger King Burger King Burger King Burger King
+[205] Burger King Burger King Burger King Burger King Burger King Burger King
+[211] Burger King Burger King Burger King Burger King Burger King Burger King
+[217] Burger King Burger King Burger King Burger King Burger King Burger King
+[223] Burger King Burger King Burger King Burger King Burger King Burger King
+[229] Burger King Burger King Burger King Burger King Burger King Burger King
+[235] Burger King Burger King Burger King Burger King Burger King Burger King
+[241] Burger King Burger King Burger King Burger King Burger King Burger King
+[247] Burger King Burger King Burger King Burger King Burger King Burger King
+[253] Burger King Burger King Burger King Burger King Burger King Burger King
+[259] Burger King Burger King Burger King Burger King Dairy Queen Dairy Queen
+[265] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[271] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[277] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[283] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[289] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[295] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen Dairy Queen
+[301] Dairy Queen Dairy Queen Dairy Queen Dairy Queen Subway      Subway     
+[307] Subway      Subway      Subway      Subway      Subway      Subway     
+[313] Subway      Subway      Subway      Subway      Subway      Subway     
+[319] Subway      Subway      Subway      Subway      Subway      Subway     
+[325] Subway      Subway      Subway      Subway      Subway      Subway     
+[331] Subway      Subway      Subway      Subway      Subway      Subway     
+[337] Subway      Subway      Subway      Subway      Subway      Subway     
+[343] Subway      Subway      Subway      Subway      Subway      Subway     
+[349] Subway      Subway      Subway      Subway      Subway      Subway     
+[355] Subway      Subway      Subway      Subway      Subway      Subway     
+[361] Subway      Subway      Subway      Subway      Subway      Subway     
+[367] Subway      Subway      Subway      Subway      Subway      Subway     
+[373] Subway      Subway      Subway      Subway      Subway      Subway     
+[379] Subway      Subway      Subway      Subway      Subway      Subway     
+[385] Subway      Subway      Subway      Subway      Subway      Subway     
+[391] Subway      Subway      Subway      Subway      Subway      Subway     
+[397] Subway      Subway      Subway      Subway      Taco Bell   Taco Bell  
+[403] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[409] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[415] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[421] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[427] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[433] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[439] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[445] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[451] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[457] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[463] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[469] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[475] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[481] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[487] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[493] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[499] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[505] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+[511] Taco Bell   Taco Bell   Taco Bell   Taco Bell   Taco Bell  
+8 Levels: Arbys Burger King Chick Fil-A Dairy Queen Mcdonalds Sonic ... Taco Bell</code></pre>
+</div>
+</div></section><section id="section-19" class="slide level2">
+<h2></h2>
+<p>Query factor levels</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-26_586044d6f763808256f507962dd98d69">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">levels</span>(<span class="fu">factor</span>(fastfood<span class="sc">$</span>restaurant))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Arbys"       "Burger King" "Chick Fil-A" "Dairy Queen" "Mcdonalds"  
+[6] "Sonic"       "Subway"      "Taco Bell"  </code></pre>
+</div>
+</div>
+</div>
+<blockquote>
+<p>How are the levels ordered?</p>
+</blockquote>
+</section>
+<section id="factor-levels" class="slide level2">
+<h2>Factor levels</h2>
+<p>We can specify factor levels manually with the <code>levels</code> argument</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-27_969dc284dc9da8c4515f238be1812a60">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>newlevels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Mcdonalds"</span>,<span class="st">"Arbys"</span>,<span class="st">"Burger King"</span>,<span class="st">"Subway"</span>,</span>
+<span id="cb48-2"><a href="#cb48-2"></a>               <span class="st">"Chick Fil-A"</span>,<span class="st">"Dairy Queen"</span>,<span class="st">"Taco Bell"</span>,<span class="st">"Sonic"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="fu">levels</span>(<span class="fu">factor</span>(fastfood<span class="sc">$</span>restaurant,<span class="at">levels =</span> newlevels))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Mcdonalds"   "Arbys"       "Burger King" "Subway"      "Chick Fil-A"
+[6] "Dairy Queen" "Taco Bell"   "Sonic"      </code></pre>
+</div>
+</div>
+</section>
+<section id="factors-made-easy-with-forcats-1" class="slide level2">
+<h2>Factors made easy with <code>forcats</code></h2>
+<div class="columns">
+<div class="column" style="width:61%;">
+<p>Tools for working with categorical variables</p>
+</div><div class="column" style="width:38%;">
+<p><img data-src="imgs/forcatslogo.png"></p>
+</div>
+</div>
+<ul>
+<li>reorder a factor with another variable’s values</li>
+<li>suppress alphabetical ordering</li>
+<li>reverse factor levels</li>
+<li>group levels</li>
+</ul>
+</section>
+<section id="section-20" class="slide level2">
+<h2></h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-28_4b3307c49db5be554cb458405c4bef05">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>sneakers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 4
+   Name         Sport      Price Rating
+   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+ 1 Boost 3000   Running       99      4
+ 2 HiSpeed      Running       44      4
+ 3 Super2       Trail        100      5
+ 4 Goal         Football     119      3
+ 5 Goal2.0      Football      79      4
+ 6 Airball Max  Basketball    49      4
+ 7 Glide Best   Running       55      5
+ 8 Outdoor King Trail        160      5
+ 9 G90x         Football     120      4
+10 Smith Pro    Running       89      4
+11 Travel Low   Basketball    89      3</code></pre>
+</div>
+</div>
+</section>
+<section id="section-21" class="slide level2">
+<h2></h2>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-29_c4727b15db279c985d78694b26e59343">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">factor</span>(sneakers<span class="sc">$</span>Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Running    Running    Trail      Football   Football   Basketball
+ [7] Running    Trail      Football   Running    Basketball
+Levels: Basketball Football Running Trail</code></pre>
+</div>
+</div>
+</div>
+<p>Query levels</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-30_8d7d57e79c9f848c64aabaaefed12feb">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">factor</span>(sneakers<span class="sc">$</span>Sport) <span class="sc">%&gt;%</span> <span class="fu">levels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Basketball" "Football"   "Running"    "Trail"     </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-22" class="slide level2">
+<h2></h2>
+<p>Keep order of appearance</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-31_d44d317ebd78c53d15ba9650d15c752e">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="fu">fct_inorder</span>(sneakers<span class="sc">$</span>Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Running    Running    Trail      Football   Football   Basketball
+ [7] Running    Trail      Football   Running    Basketball
+Levels: Running Trail Football Basketball</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-23" class="slide level2">
+<h2></h2>
+<p>Order by frequency</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-32_43edaf487df3007d0af3000937852d10">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">fct_infreq</span>(sneakers<span class="sc">$</span>Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Running    Running    Trail      Football   Football   Basketball
+ [7] Running    Trail      Football   Running    Basketball
+Levels: Running Football Basketball Trail</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-24" class="slide level2">
+<h2></h2>
+<p>Reverse order</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-33_fd327ac630c799245c1f4ee534bb16b4">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">fct_rev</span>(sneakers<span class="sc">$</span>Sport)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Running    Running    Trail      Football   Football   Basketball
+ [7] Running    Trail      Football   Running    Basketball
+Levels: Trail Running Football Basketball</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="section-25" class="slide level2">
+<h2></h2>
+<p>Subset - one shoe per sport</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-34_f4db968d85071b3a196921075dc53401">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>sneakersSubset <span class="ot">&lt;-</span> sneakers <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>) </span>
+<span id="cb62-2"><a href="#cb62-2"></a>sneakersSubset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  Name        Sport      Price Rating
+  &lt;chr&gt;       &lt;chr&gt;      &lt;int&gt;  &lt;int&gt;
+1 Boost 3000  Running       99      4
+2 Super2      Trail        100      5
+3 Goal        Football     119      3
+4 Airball Max Basketball    49      4</code></pre>
+</div>
+</div>
+<p>Reorder levels by price</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-35_561293508c587e957b7e6cff73690612">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">fct_reorder</span>(sneakersSubset<span class="sc">$</span>Sport,sneakersSubset<span class="sc">$</span>Price)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Running    Trail      Football   Basketball
+Levels: Basketball Running Trail Football</code></pre>
+</div>
+</div>
+<p><code>.desc</code> argument for descending order</p>
+</section></section>
+<section>
+<section id="data-visualization-with-ggplot2" class="title-slide slide level1 center">
+<h1>Data visualization with <code>ggplot2</code></h1>
+
+</section>
+<section id="graphics-in-r" class="slide level2">
+<h2>Graphics in R</h2>
+<p>Since its initial release, R has had the ability to produce customizable publication-quality graphics.</p>
+<ul>
+<li>Base R plots</li>
+<li>Lattice plots (<code>lattice</code> package)</li>
+<li><code>ggplot2</code></li>
+<li>wrapper packages (<code>highcharter</code>, <code>echarts4r</code>)</li>
+</ul>
+<div style="text-align: right">
+<p><a href="https://intro2r.com/graphics_base_r.html%5D">4. Graphics with base R</a>&nbsp; An Introduction to R<br>
+Alex Douglas et al.&nbsp;(2023)</p>
+</div>
+</section>
+<section id="section-26" class="slide level2">
+<h2></h2>
+<div style="text-align:center">
+<p><a href="https://link.springer.com/book/10.1007/0-387-28695-0">The Grammar of Graphics</a><br>
+Wilkinson (1999, 2005)</p>
+<p><a href="ttps://doi.org/10.1198/jcgs.2009.07098">A Layered Grammar of Graphics</a><br>
+Hadley Wickham (2007)</p>
+</div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img data-src="imgs/ggwilk.jpg"> <img data-src="imgs/layered.png" style="width:20.0%"> <img data-src="imgs/ggplot2.png" style="width:20.0%"> <img data-src="imgs/ggpltcht.jpeg" style="width:20.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-27" class="slide level2">
+<h2></h2>
+<p><strong>Grammar</strong>: how words and their component parts combine to form sentences</p>
+<p><br></p>
+<ul>
+<li><p>With a grammar we don’t need to memorize individual sentences to communicate in a language</p></li>
+<li><p>If we learn a grammar for graphics, we can describe and build a wide range of statistical graphics from scratch</p></li>
+</ul>
+</section>
+<section id="layered-graphics" class="slide level2">
+<h2>Layered graphics</h2>
+
+<img data-src="imgs/grammar.png" class="r-stretch quarto-figure-center"></section>
+<section id="section-28" class="slide level2" data-background-image="imgs/blocks.jpg">
+<h2></h2>
+<h3 id="building-a-ggplot">Building a ggplot</h3>
+<p><br></p>
+<p><code>data</code> - object with the data we wish to visualize</p>
+<p><br></p>
+<p><code>aes</code> (mapping) - definition of how variables in the dataset are mapped to visual properties (aesthetics) of the plot</p>
+<p><br></p>
+<p><code>geom</code> - geometrical object that represents data</p>
+</section>
+<section id="section-29" class="slide level2">
+<h2></h2>
+<div class="big-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-36_313789ac9c4abcf6283fdb4d9c155f38">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(x,y)) <span class="sc">+</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br> <br> <code>ggplot()</code> creates the plot</p>
+<p><code>aes()</code> links variables in the data with visual properties of the plot</p>
+<p><code>geom_*</code> defines a layer with a visual representation of the data</p>
+</section>
+<section id="section-30" class="slide level2">
+<h2></h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">lizards</a></li><li><a href="#tabset-3-2">Data</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-37_aa78370b292b2dc5f6966a487169ef65">
+<div class="cell-output-display">
+
+<div id="fzynbmjnnj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fzynbmjnnj table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#fzynbmjnnj thead, #fzynbmjnnj tbody, #fzynbmjnnj tfoot, #fzynbmjnnj tr, #fzynbmjnnj td, #fzynbmjnnj th {
+  border-style: none;
+}
+
+#fzynbmjnnj p {
+  margin: 0;
+  padding: 0;
+}
+
+#fzynbmjnnj .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #F4F4F9;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#fzynbmjnnj .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #F4F4F9;
+  border-bottom-width: 0;
+}
+
+#fzynbmjnnj .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #F4F4F9;
+  border-top-width: 0;
+}
+
+#fzynbmjnnj .gt_heading {
+  background-color: #F4F4F9;
+  text-align: center;
+  border-bottom-color: #F4F4F9;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_col_heading {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fzynbmjnnj .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fzynbmjnnj .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fzynbmjnnj .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fzynbmjnnj .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fzynbmjnnj .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#fzynbmjnnj .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#fzynbmjnnj .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fzynbmjnnj .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fzynbmjnnj .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fzynbmjnnj .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fzynbmjnnj .gt_stub {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzynbmjnnj .gt_stub_row_group {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#fzynbmjnnj .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#fzynbmjnnj .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#fzynbmjnnj .gt_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzynbmjnnj .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#fzynbmjnnj .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_grand_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzynbmjnnj .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fzynbmjnnj .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_footnotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzynbmjnnj .gt_sourcenotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fzynbmjnnj .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fzynbmjnnj .gt_left {
+  text-align: left;
+}
+
+#fzynbmjnnj .gt_center {
+  text-align: center;
+}
+
+#fzynbmjnnj .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fzynbmjnnj .gt_font_normal {
+  font-weight: normal;
+}
+
+#fzynbmjnnj .gt_font_bold {
+  font-weight: bold;
+}
+
+#fzynbmjnnj .gt_font_italic {
+  font-style: italic;
+}
+
+#fzynbmjnnj .gt_super {
+  font-size: 65%;
+}
+
+#fzynbmjnnj .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#fzynbmjnnj .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#fzynbmjnnj .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#fzynbmjnnj .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#fzynbmjnnj .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#fzynbmjnnj .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#fzynbmjnnj .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 33px;" scope="col" id="length">length</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 33px;" scope="col" id="mass">mass</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 33px;" scope="col" id="stage">stage</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">9</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">20</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">8</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">13</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">juvenile</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">7</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">15</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">juvenile</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">13</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">18</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">11</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">21</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 33px;">6</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 33px;">14</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 33px;">juvenile</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-38_62871da3ceb4a198ea47fdec1c334782">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>lizards <span class="ot">&lt;-</span> </span>
+<span id="cb67-2"><a href="#cb67-2"></a>tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb67-3"><a href="#cb67-3"></a>  <span class="sc">~</span>length, <span class="sc">~</span>mass,     <span class="sc">~</span>stage,</span>
+<span id="cb67-4"><a href="#cb67-4"></a>       9L,   20L,    <span class="st">"adult"</span>,</span>
+<span id="cb67-5"><a href="#cb67-5"></a>       8L,   13L, <span class="st">"juvenile"</span>,</span>
+<span id="cb67-6"><a href="#cb67-6"></a>       7L,   15L, <span class="st">"juvenile"</span>,</span>
+<span id="cb67-7"><a href="#cb67-7"></a>      13L,   18L,    <span class="st">"adult"</span>,</span>
+<span id="cb67-8"><a href="#cb67-8"></a>      11L,   21L,    <span class="st">"adult"</span>,</span>
+<span id="cb67-9"><a href="#cb67-9"></a>       6L,   14L, <span class="st">"juvenile"</span></span>
+<span id="cb67-10"><a href="#cb67-10"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-39_475041bb5a29cc027c3e46ea5daffffe">
+<div class="cell-output-display">
+
+<div id="xgmikrhhcn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xgmikrhhcn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xgmikrhhcn thead, #xgmikrhhcn tbody, #xgmikrhhcn tfoot, #xgmikrhhcn tr, #xgmikrhhcn td, #xgmikrhhcn th {
+  border-style: none;
+}
+
+#xgmikrhhcn p {
+  margin: 0;
+  padding: 0;
+}
+
+#xgmikrhhcn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #F4F4F9;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xgmikrhhcn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #F4F4F9;
+  border-bottom-width: 0;
+}
+
+#xgmikrhhcn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #F4F4F9;
+  border-top-width: 0;
+}
+
+#xgmikrhhcn .gt_heading {
+  background-color: #F4F4F9;
+  text-align: center;
+  border-bottom-color: #F4F4F9;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_col_heading {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xgmikrhhcn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xgmikrhhcn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xgmikrhhcn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xgmikrhhcn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xgmikrhhcn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xgmikrhhcn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xgmikrhhcn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xgmikrhhcn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xgmikrhhcn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xgmikrhhcn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xgmikrhhcn .gt_stub {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xgmikrhhcn .gt_stub_row_group {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xgmikrhhcn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xgmikrhhcn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xgmikrhhcn .gt_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xgmikrhhcn .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xgmikrhhcn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xgmikrhhcn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xgmikrhhcn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_footnotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xgmikrhhcn .gt_sourcenotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xgmikrhhcn .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xgmikrhhcn .gt_left {
+  text-align: left;
+}
+
+#xgmikrhhcn .gt_center {
+  text-align: center;
+}
+
+#xgmikrhhcn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xgmikrhhcn .gt_font_normal {
+  font-weight: normal;
+}
+
+#xgmikrhhcn .gt_font_bold {
+  font-weight: bold;
+}
+
+#xgmikrhhcn .gt_font_italic {
+  font-style: italic;
+}
+
+#xgmikrhhcn .gt_super {
+  font-size: 65%;
+}
+
+#xgmikrhhcn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xgmikrhhcn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xgmikrhhcn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xgmikrhhcn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xgmikrhhcn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xgmikrhhcn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xgmikrhhcn .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="length">length</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="mass">mass</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="stage">stage</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">9</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">20</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">8</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">13</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">juvenile</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">7</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">15</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">juvenile</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">13</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">18</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">11</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">21</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">adult</td></tr>
+    <tr><td headers="length" class="gt_row gt_right" style="font-size: 34px;">6</td>
+<td headers="mass" class="gt_row gt_right" style="font-size: 34px;">14</td>
+<td headers="stage" class="gt_row gt_left" style="font-size: 34px;">juvenile</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-40_9a69bc55609553cf8259c90a3f1525f6">
+<div class="cell-output-display">
+
+<div id="rhmtdozscr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rhmtdozscr table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#rhmtdozscr thead, #rhmtdozscr tbody, #rhmtdozscr tfoot, #rhmtdozscr tr, #rhmtdozscr td, #rhmtdozscr th {
+  border-style: none;
+}
+
+#rhmtdozscr p {
+  margin: 0;
+  padding: 0;
+}
+
+#rhmtdozscr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #F4F4F9;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#rhmtdozscr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #F4F4F9;
+  border-bottom-width: 0;
+}
+
+#rhmtdozscr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #F4F4F9;
+  border-top-width: 0;
+}
+
+#rhmtdozscr .gt_heading {
+  background-color: #F4F4F9;
+  text-align: center;
+  border-bottom-color: #F4F4F9;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_col_heading {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rhmtdozscr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rhmtdozscr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rhmtdozscr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rhmtdozscr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rhmtdozscr .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#rhmtdozscr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#rhmtdozscr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rhmtdozscr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#rhmtdozscr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#rhmtdozscr .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rhmtdozscr .gt_stub {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rhmtdozscr .gt_stub_row_group {
+  color: #333333;
+  background-color: #F4F4F9;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#rhmtdozscr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#rhmtdozscr .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#rhmtdozscr .gt_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rhmtdozscr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#rhmtdozscr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #F4F4F9;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rhmtdozscr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rhmtdozscr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_footnotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rhmtdozscr .gt_sourcenotes {
+  color: #333333;
+  background-color: #F4F4F9;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rhmtdozscr .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rhmtdozscr .gt_left {
+  text-align: left;
+}
+
+#rhmtdozscr .gt_center {
+  text-align: center;
+}
+
+#rhmtdozscr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rhmtdozscr .gt_font_normal {
+  font-weight: normal;
+}
+
+#rhmtdozscr .gt_font_bold {
+  font-weight: bold;
+}
+
+#rhmtdozscr .gt_font_italic {
+  font-style: italic;
+}
+
+#rhmtdozscr .gt_super {
+  font-size: 65%;
+}
+
+#rhmtdozscr .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#rhmtdozscr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#rhmtdozscr .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#rhmtdozscr .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#rhmtdozscr .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#rhmtdozscr .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#rhmtdozscr .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="x">x</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="y">y</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="font-size: 34px;" scope="col" id="shape">shape</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">9</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">20</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">circle</td></tr>
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">8</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">13</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">triangle</td></tr>
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">7</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">15</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">triangle</td></tr>
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">13</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">18</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">circle</td></tr>
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">11</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">21</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">circle</td></tr>
+    <tr><td headers="x" class="gt_row gt_right" style="font-size: 34px;">6</td>
+<td headers="y" class="gt_row gt_right" style="font-size: 34px;">14</td>
+<td headers="shape" class="gt_row gt_left" style="font-size: 34px;">triangle</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-31" class="slide level2">
+<h2></h2>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-42_579beff19bba91680dd27706921dfb59">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lizards,     </span>
+<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">aes</span>(<span class="at">x =</span> length,<span class="at">y =</span> mass))<span class="sc">+</span></span>
+<span id="cb68-3"><a href="#cb68-3"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="evolmar-tidyverse_files/figure-revealjs/unnamed-chunk-42-1.png" width="1000" class="r-stretch"></section></section>
+<section id="hands-on" class="title-slide slide level1 center" data-background-color="#a4c5ff">
+<h1>Hands-on</h1>
+<ul>
+<li>Open the file <code>01_first-plots.R</code></li>
+<li>Follow along</li>
+</ul>
+</section>
+
+<section>
+<section id="customization" class="title-slide slide level1 center">
+<h1>Customization</h1>
+<p>We can modify everything that we see in a plot</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><code>labs</code><br>
+<code>fill</code><br>
+<code>color</code><br>
+<code>size</code><br>
+<code>themes</code><br>
+<code>scale_fill_*</code><br>
+<code>scale_shape_*</code><br>
+<code>scale_color_*</code></p>
+</div><div class="column" style="width:70%;">
+<p>labels for axes, titles, etc.<br>
+fill colors<br>
+border colors<br>
+object sizes<br>
+preset looks</p>
+<p>manual control over mappings (color, fill, shape)</p>
+</div>
+</div>
+</section>
+<section id="section-32" class="slide level2">
+<h2></h2>
+<p><code>ggplot2</code> has built-in defaults for shapes and colors</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img data-src="imgs/defshapes.png"> <img data-src="imgs/defcols.jpg" style="width:40.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="non-default-colors-and-shapes" class="slide level2">
+<h2>Non-default colors and shapes</h2>
+<p>Manual control with vectors (fills, colors, shapes) for the <code>values</code> argument of <code>scale_*_*</code> functions</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-43_2e7e8d5efec3a6811919f6aa7279fbe9">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">ggplot</span>(penguins,</span>
+<span id="cb69-2"><a href="#cb69-2"></a>     <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,</span>
+<span id="cb69-3"><a href="#cb69-3"></a>         <span class="at">y=</span>flipper_length_mm,</span>
+<span id="cb69-4"><a href="#cb69-4"></a>        <span class="at">shape=</span>species,<span class="at">color=</span>species))<span class="sc">+</span></span>
+<span id="cb69-5"><a href="#cb69-5"></a> <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb69-6"><a href="#cb69-6"></a> <span class="fu">scale_color_manual</span>(<span class="at">values=</span></span>
+<span id="cb69-7"><a href="#cb69-7"></a>              <span class="fu">c</span>(<span class="st">'pink'</span>,<span class="st">'blue'</span>,<span class="st">"red"</span>))<span class="sc">+</span></span>
+<span id="cb69-8"><a href="#cb69-8"></a> <span class="fu">scale_shape_manual</span>(<span class="at">values=</span></span>
+<span id="cb69-9"><a href="#cb69-9"></a>              <span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">21</span>,<span class="dv">22</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="colors" class="slide level2">
+<h2>Colors</h2>
+<p>HTML names</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img data-src="https://kktg.net/sgr/wp-content/uploads/colors2.png" style="width:44.0%"> <img data-src="https://kktg.net/sgr/wp-content/uploads/colors4.png" style="width:44.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="colors-1" class="slide level2">
+<h2>Colors</h2>
+<p>Hex codes</p>
+
+<img data-src="imgs/hexpals.png" class="r-stretch quarto-figure-center"><p>Free Color Picker (Windows); Gpick (Linux); ColorSlurp (Mac)</p>
+</section>
+<section id="color-palettes" class="slide level2">
+<h2>Color palettes</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Specify a named palette<br>
+</li>
+<li>Define with a vector</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="imgs/ejemplocool.png"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>🔗 Example gallery for <a href="https://pmassicotte.github.io/paletteer_gallery/"><code>paletteer</code></a></p>
+<p>🔗 <a href="https://pokepalettes.com/">Pokepalettes</a></p>
+</section>
+<section id="legend-titles" class="slide level2">
+<h2>Legend titles</h2>
+<p>The <code>name</code> arguments modifies the title for legends created automatically for each mapping</p>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-44_32608ca8663e8bc20a03758df70b5ad8">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">aes</span>(x,y, <span class="at">color =</span> var1, <span class="at">shape =</span> var2)<span class="sc">+</span></span>
+<span id="cb70-2"><a href="#cb70-2"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'red'</span>,<span class="st">'blue'</span>), </span>
+<span id="cb70-3"><a href="#cb70-3"></a>                       <span class="at">name=</span> <span class="st">'Variable One'</span>)<span class="sc">+</span></span>
+<span id="cb70-4"><a href="#cb70-4"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">21</span>),</span>
+<span id="cb70-5"><a href="#cb70-5"></a>                       <span class="at">name =</span> <span class="st">'Variable Two'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="quantitative-variables-color" class="slide level2">
+<h2><em>Quantitative</em> variables + color:</h2>
+<ul>
+<li>Default color ramp or named gradient</li>
+<li>Define gradient with <code>scale_x_gradient</code></li>
+</ul>
+<div class="cell columns column-output-location" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-46_58607052ec24da5fef5a3e77fb0016e6">
+<div class="column">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">ggplot</span>(penguins,</span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,</span>
+<span id="cb71-3"><a href="#cb71-3"></a>      <span class="at">y=</span>flipper_length_mm,</span>
+<span id="cb71-4"><a href="#cb71-4"></a>      <span class="at">fill=</span>body_mass_g))<span class="sc">+</span></span>
+<span id="cb71-5"><a href="#cb71-5"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>,</span>
+<span id="cb71-6"><a href="#cb71-6"></a>             <span class="at">color=</span><span class="st">"white"</span>,</span>
+<span id="cb71-7"><a href="#cb71-7"></a>             <span class="at">pch=</span><span class="dv">21</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column fragment">
+<div class="cell-output-display">
+<p><img data-src="evolmar-tidyverse_files/figure-revealjs/unnamed-chunk-46-1.png" width="1000"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="hands-on-customization" class="slide level2" data-background-color="#a4c5ff">
+<h2>Hands-on: Customization</h2>
+<p>Modifying graphical parameters</p>
+<div style="font-size: 1.5em;">
+<p><code style="color:orange">02_customizing.R</code></p>
+</div>
+</section>
+<section id="themes" class="slide level2">
+<h2>Themes</h2>
+<p>Control multiple visual parameters without altering the underlying data</p>
+<ul>
+<li>8 themes available with <code>ggplot2</code><br>
+</li>
+<li>packages with additional themes: <a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/"><code>ggthemes</code></a>, <a href="https://datarootsio.github.io/artyfarty/articles/introduction.html"><code>artyfarty</code></a>, <a href="https://github.com/hrbrmstr/hrbrthemes"><code>hrbrthemes</code></a>`<br>
+</li>
+<li>create our own</li>
+</ul>
+
+<img data-src="imgs/themesgg.png" style="width:60.0%" class="r-stretch"></section>
+<section id="color-ramps" class="slide level2">
+<h2>Color ramps</h2>
+<ul>
+<li>More accurate visual perception of central value and increments of the underlying variables</li>
+</ul>
+
+<img data-src="imgs/batlow.png" class="r-stretch quarto-figure-center"><div style="text-align:center">
+<p>🔗 Fabio Crameri - <a href="https://www.fabiocrameri.ch/colourmaps/">Scientific Color Maps</a></p>
+</div>
+</section>
+<section id="perceptually-uniform-color-ramps" class="slide level2">
+<h2>Perceptually uniform color ramps</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><img data-src="imgs/viridis-scales.png" style="width:65.0%"> <img data-src="imgs/scicopals.png" style="width:65.0%"></p>
+</div><div class="column" style="width:55%;">
+<h3 id="viridis">viridis</h3>
+<ul>
+<li>installed with <code>ggplot2</code></li>
+<li>call with <code>scale_x_viridis()</code></li>
+</ul>
+<h3 id="scico">scico</h3>
+<ul>
+<li>provided by <code>scico</code> package</li>
+<li>divergent &amp; sequential</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="hands-on-color-ramps" class="slide level2" data-background-color="#a4c5ff">
+<h2>Hands-on: Color ramps</h2>
+<p>Colors and continuous variables</p>
+<div style="font-size: 1.5em;">
+<p><code style="color:orange">03_ramps.R</code></p>
+</div>
+</section>
+<section id="exporting-graphics" class="slide level2">
+<h2>Exporting graphics</h2>
+<h3 id="our-options">Our options</h3>
+<ul>
+<li>‘Export’ button in RStudio</li>
+<li>Graphical devices</li>
+<li><code>ggsave()</code><br>
+</li>
+<li>Formats: png, jpg, pdf, etc.</li>
+</ul>
+</section>
+<section id="export-with-graphical-device" class="slide level2">
+<h2>Export with graphical device</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong></strong></p>
+</div>
+<div class="callout-content">
+<p>We can asign plots to workspace objects</p>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-47_0f9460c17bc32043f2db72a06cd54c73">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>my_plot <span class="ot">&lt;-</span> </span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="fu">ggplot</span>(penguins,</span>
+<span id="cb72-3"><a href="#cb72-3"></a>       <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,</span>
+<span id="cb72-4"><a href="#cb72-4"></a>          <span class="at">y=</span>flipper_length_mm))<span class="sc">+</span></span>
+<span id="cb72-5"><a href="#cb72-5"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>,<span class="at">pch=</span><span class="dv">21</span>)</span>
+<span id="cb72-6"><a href="#cb72-6"></a></span>
+<span id="cb72-7"><a href="#cb72-7"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="st">"myplot.png"</span>,</span>
+<span id="cb72-8"><a href="#cb72-8"></a>    <span class="at">width =</span> <span class="dv">10</span>, </span>
+<span id="cb72-9"><a href="#cb72-9"></a>    <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb72-10"><a href="#cb72-10"></a>    <span class="at">units =</span><span class="st">"cm"</span>,</span>
+<span id="cb72-11"><a href="#cb72-11"></a>    <span class="at">res =</span> <span class="dv">200</span>)</span>
+<span id="cb72-12"><a href="#cb72-12"></a>my_plot</span>
+<span id="cb72-13"><a href="#cb72-13"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="agg-devices" class="slide level2">
+<h2><code>agg</code> devices</h2>
+<ul>
+<li>Fast and crisp</li>
+<li>Provided with <code>ragg</code></li>
+</ul>
+<div class="med-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-48_1239958052fa9ff1f35fb2b3b5fe83b3">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">agg_png</span>(<span class="at">filename =</span> <span class="st">"myraggplot.png"</span>,</span>
+<span id="cb73-2"><a href="#cb73-2"></a>    <span class="at">width =</span> <span class="dv">10</span>, <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb73-3"><a href="#cb73-3"></a>    <span class="at">units =</span><span class="st">"cm"</span>,</span>
+<span id="cb73-4"><a href="#cb73-4"></a>    <span class="at">res =</span> <span class="dv">200</span>)</span>
+<span id="cb73-5"><a href="#cb73-5"></a>my_plot</span>
+<span id="cb73-6"><a href="#cb73-6"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="ggsave" class="slide level2">
+<h2><code>ggsave()</code></h2>
+<ul>
+<li>Will use <code>ragg</code> if it is installed</li>
+</ul>
+<div class="big-code">
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-49_56e8422c17ca994fe50282f29d065eec">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">ggsave</span>(my_plot, </span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="at">filename =</span> <span class="st">"myplotgs.png"</span>,</span>
+<span id="cb74-3"><a href="#cb74-3"></a>    <span class="at">width =</span> <span class="dv">10</span>, </span>
+<span id="cb74-4"><a href="#cb74-4"></a>    <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb74-5"><a href="#cb74-5"></a>    <span class="at">units =</span><span class="st">"cm"</span>,</span>
+<span id="cb74-6"><a href="#cb74-6"></a>    <span class="at">dpi =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="looks-off" class="slide level2">
+<h2>Looks off?</h2>
+
+<img data-src="imgs/exportando.png" class="r-stretch"><p><code>scale</code> argument for <code>ggsave()</code> and <code>scaling</code> in <code>ragg</code> devices will adjust points and text with a scaling factor</p>
+</section>
+<section id="facetting" class="slide level2">
+<h2>Facetting</h2>
+
+<img data-src="imgs/exprgutsoct2021_final.png" class="r-stretch quarto-figure-center"></section>
+<section id="facet-functions" class="slide level2">
+<h2>Facet functions</h2>
+<p><code style="color:orange" size="1.2em">facet_wrap()</code> splits by one variable and wraps the resulting subplots</p>
+<p><code style="color:orange" size="1.2em">facet_grid()</code> splits by combinations of variables</p>
+
+<img data-src="imgs/position-facets.png" class="r-stretch quarto-figure-center"></section>
+<section id="hands-on-facets" class="slide level2" data-background-color="#a4c5ff">
+<h2>Hands-on: Facets</h2>
+<p><code>starbucks</code> coffee shop data from <code>openintro</code></p>
+<div style="font-size: 1.5em;">
+<p><code style="color:orange">04_facets.R</code></p>
+</div>
+</section>
+<section id="factors-and-plots" class="slide level2">
+<h2>Factors and plots</h2>
+<p>Values for categorical variables will be ordered alphabetically unless specified otherwise</p>
+<div class="cell" data-hash="evolmar-tidyverse_cache/revealjs/unnamed-chunk-51_36bda0ba854d149579cb29d881aa170d">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="fu">ggplot</span>(starbucks,<span class="fu">aes</span>(fat,protein))<span class="sc">+</span></span>
+<span id="cb75-2"><a href="#cb75-2"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="st">"type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="evolmar-tidyverse_files/figure-revealjs/unnamed-chunk-51-1.png" width="1000" class="r-stretch"></section>
+<section id="hands-on-reordering-factor-levels" class="slide level2" data-background-color="#a4c5ff">
+<h2>Hands-on: Reordering factor levels</h2>
+<p><code>babies_crawl</code> crawling age data from <code>openintro</code></p>
+<div style="font-size: 1.5em;">
+<p><code style="color:orange">05_reorder.R</code></p>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong></strong></p>
+</div>
+<div class="callout-content">
+<p>Crawling age (weeks) in relation to temperature and birth month. From Benson (1993).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="questions" class="slide level2">
+<h2>Questions?</h2>
+</section></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!</h1>
+
+<div class="footer footer-default">
+
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: true,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

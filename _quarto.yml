@@ -1,0 +1,16 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Evolmar tidyverse course 2023"
+
+format:
+  html:
+    theme: darkly
+    fontsize: 1.3em
+    toc: true
+
+execute:
+  freeze: auto
+

@@ -1,0 +1,1503 @@
+---
+title: "Hands-On Data Manipulation and Visualization with the tidyverse and ggplot2"
+subtitle: Physalia Courses Online - Evolmar 2023
+author: Luis D. Verde Arregoitia
+format:
+  revealjs:
+    theme: curso_styles.scss
+    transition: fade
+    progress: true
+    preview-links: true
+    hide-inactive-cursor: true
+    highlight-style: printing
+    pause: true
+editor: source
+knitr:
+  opts_chunk:
+    dev: "ragg_png"
+    retina: 3
+    dpi: 200
+execute:
+  freeze: auto
+  cache: true
+  echo: true
+  fig-width: 5
+  fig-height: 6
+---
+
+```{r fa packages setup}
+#| echo: false
+library(fontawesome)
+```
+
+```{r setup}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(here)
+library(tidyr)
+library(gt)
+library(ggthemes)
+library(patchwork)
+library(ggtext)
+```
+
+## 
+
+::: columns
+::: {.column width="40%"}
+![](imgs/luisbb.jpg){width="50%"}\
+[`r fontawesome::fa(name = "twitter")` \@LuisDVerde](https://twitter.com/LuisDVerde)\
+[`r fontawesome::fa(name = "cloud")` \@LuisDVerde](https://bsky.app/profile/luisdverde.bsky.social)\
+[`r fontawesome::fa(name = "github")` \@LuisDVA](https://github.com/luisdva)\
+[`r fontawesome::fa(name = "link")` liomys.mx](https://liomys.mx)\
+[`r fontawesome::fa(name = "paper-plane")` luis\@liomys.mx](mailto:luis@liomys.mx)
+:::
+
+::: {.column width="60%"}
+
+-   Mammalogy, macroecology, conservation
+-   Biogeography, using R as a GIS
+-   Data Science with R
+-   Certified Instructor - Posit(RStudio) & The Carpentries  
+-   R user since 2011\
+-   R 'blogger' since 2015
+:::
+:::
+
+
+## 
+
+### Segment 1: Introduction to the tidyverse
+
+- What is tidy data and the `tidyverse`?
+
+- Solving data manipulation challenges with `dplyr`
+
+- Creating tidy data with `tidyr`
+
+- Dates and times with `lubridate` 
+
+- Dealing with categorical variables using `forcats`
+
+## 
+
+### Segment 2: Data visualization with ggplot2
+
+- Graphics packages
+
+- Introduction to `ggplot2` 
+
+- Groups, geoms, stats and layers
+
+- Scales, axes and legends
+
+- Facets, colour themes and general themes 
+
+# Introduction to the tidyverse
+
+
+## 
+
+![](imgs/data-science.png)
+
+::: {style="text-align: right"}
+[R for Data Science (2e)](https://r4ds.hadley.nz/intro)
+:::
+
+## Tidy data
+
+- An accessible reformulation of existing principles and definitions from statistics and computer science, to help us structure our data for maximum usability.
+
+- With tidy data, we can focus on our tasks and use our preferred tools smoothly while taking advantage of R's vectorized nature.
+
+::: {style="text-align: right"}
+Hadley Wickham (2014)\
+[Tidy Data](https://www.jstatsoft.org/article/view/v059i10/)\
+Journal of Statistical Software
+:::
+
+
+## Tidy data principles
+
+-   Arranged in a 2D data matrix with rows and columns
+
+-   Columns correspond to variables
+
+-   Rows correspond to observations
+
+:::{.callout-note}
+##
+**Variable:** contains all values that measure the same underlying attribute \
+**Observation:** contains all values measured on the same unit across attributes
+:::
+
+::: {style="text-align: right"}
+[Principles of tidy data](https://jhudatascience.org/tidyversecourse/intro.html#principles-of-tidy-data)\
+Tidyverse Skills for Data Science\
+Wright et al. (2021)
+:::
+
+## Tidy data
+
+Each value in an observation will be paired with other values that appear in the same row
+
+![](imgs/discounts.png)
+
+##
+
+Ready for input into plotting and modeling functions
+
+![](imgs/tidyvarsmap.png){fig-align="center"}
+
+## 
+
+![](imgs/tidyverse_celestial.png){fig-align="center}
+
+##
+
+> ... an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. Its primary goal is to facilitate a conversation between a human and a computer about data
+
+::: {style="text-align: right"}
+Wickham et al. (2019)\
+[Welcome to the tidyverse](https://www.theoj.org/joss-papers/joss.01686/10.21105.joss.01686.pdf)\
+https://www.tidyverse.org/
+:::
+
+## tidyverse
+
+-   For the most common tasks: data import, manipulation, visualization, and programming
+
+- Designed for easier learning and gradual engagement with additional pieces of the larger ecosystem
+
+- Pipe-friendly
+
+::: {style="text-align: right"}
+Çetinkaya-Rundel et al. (2021)\
+An educator's perspective of the tidyverse\
+[arxiv.org/abs/2108.03510](https://arxiv.org/abs/2108.03510)
+:::
+
+## Packages 📦
+
+Out of the box, R is ready for most statistical analyses and data visualization task. However, > 20,000 additional packages exist to expand the capabilities of R.
+
+### Installing packages:
+`install.packages()` for CRAN packages, `remotes` for other sources
+
+### Loading packages:
+`library()` or the RStudio packages pane
+
+
+## Course setup {background-color="#a4c5ff"}
+
+- Course folder
+- RStudio project
+- Course scripts - [download here](course_scripts.zip)
+- Check packages
+
+## tidy tools for preparing, transforming, and restructuring data
+
+::: columns
+::: {.column width="20%"}
+![](imgs/dplyrlogo.png)
+![](imgs/tidyrlogo.png)
+:::
+
+::: {.column width="80%"}
+Flexible, but developed around built-in features that support a particular way of doing things
+
+-   Hard to use incorrectly by accident
+-   Less code to achieve a goal
+-   Shared grammar and data structures
+-   Tasks split up across functions and packages
+:::
+:::
+
+## Pipes
+
+To perform multiple operations in sequence:
+
+::: incremental
+-   Nested code (results evaluated from the inside out)
+
+-   Intermediate objects (assign objects with intermediate results and pass to the next function in a sequence)
+
+-   Pipes (structure sequential operations left-to-right)
+:::
+
+## Nested code
+
+</br>
+
+::: {.med-code}
+```{r}
+#| eval: true
+#| echo: true
+
+scores <- c(7,8,8,10,6,9,5,9,8)
+
+round(mean(scores), digits = 2)
+```
+:::
+
+## Intermediate objects
+
+</br>
+
+::: {.med-code}
+```{r}
+#| eval: true
+#| echo: true
+mn_scrs <- mean(scores)
+
+round(mn_scrs, digits = 2)
+
+```
+:::
+
+## Pipes
+`%>%` in `magrittr`; `|>` in R v \>= 4.1.0
+
+::: fragment
+::: columns
+::: {.column width="30%"}
+Left Hand Side\
+(LHS)
+:::
+
+::: {.column width="40%"}
+`pipe operator`
+
+
+:::
+
+::: {.column width="30%"}
+Right Hand Side\
+(RHS)
+:::
+:::
+:::
+
+::: fragment
+Take an **object** on the **Left Hand Side** of the pipe and insert it into a **function** as an argument on the **Right Hand Side**
+
+\* By default, **LHS** is placed as the **first** argument in the call
+:::
+
+## Pipes
+
+-   Minimize the need for intermediate objects and nested code
+
+-   Make code readable
+
+-   Easy to add or remove steps
+
+> Insert with `ctrl + shift + M`
+
+::: {style="text-align: right"}
+Adolfo Álvarez (2021)\
+[The (updated) history of the pipe operator in R](http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/)
+:::
+
+------------------------------------------------------------------------
+
+</br>
+
+::: {.med-code}
+```{r}
+#| echo: true
+library(magrittr)
+scores %>% 
+  mean() %>% 
+  round(digits=2)
+```
+:::
+------------------------------------------------------------------------
+
+`LHS |> RHS(argument = 12)`
+
+*parses to*
+
+`RHS(LHS, argument = 12)`
+
+
+##
+
+with `magrittr` pipe
+
+```{r}
+#| eval: true
+#| echo: true
+ 
+scores %>% 
+  mean() %>%  
+  round(digits=2)
+```
+
+with base pipe
+
+```{r}
+
+scores |> 
+  mean() |> 
+  round(digits=2)
+```
+
+> IDEs can toggle which pipe to insert
+
+::: {style="text-align: right"}
+Isabella Velásquez (2022)\
+[Understanding the native R pipe \|\>](https://ivelasq.rbind.io/blog/understanding-the-r-pipe/)
+:::
+
+
+
+## 📦 `dplyr` for data manipulation
+
+-   Separate functions for the most common operations
+
+-   Intuitive, user-friendly functions for:
+
+    -   Subsetting columns
+
+    -   Subsetting rows
+
+    -   Creating or modifying columns
+
+##
+
+```{r createsneakers}
+#| echo: false 
+#| eval: true
+
+sneakers <- 
+tibble::tribble(
+           ~Name,       ~Sport, ~Price, ~Rating,
+    "Boost 3000",    "Running",    99L,      4L,
+       "HiSpeed",    "Running",    44L,      4L,
+        "Super2",      "Trail",   100L,      5L,
+          "Goal",   "Football",   119L,      3L,
+       "Goal2.0",   "Football",    79L,      4L,
+   "Airball Max", "Basketball",    49L,      4L,
+    "Glide Best",    "Running",    55L,      5L,
+  "Outdoor King",      "Trail",   160L,      5L,
+          "G90x",   "Football",   120L,      4L,
+     "Smith Pro",    "Running",    89L,      4L,
+    "Travel Low", "Basketball",    89L,      3L
+  )
+
+
+```
+
+::: panel-tabset
+### sneakers
+
+```{r}
+#| echo: false 
+#| eval: true
+sneakers %>% gt() %>% 
+  tab_style(
+    cell_text(size = '21px'),
+    locations = list(cells_body(),
+                     cells_column_labels(everything()),
+                     cells_title()))
+```
+
+### Data Setup
+
+```{r}
+#| echo: true
+#| eval: false
+sneakers <- tibble::tribble(
+           ~Name,       ~Sport, ~Price, ~Rating,
+    "Boost 3000",    "Running",    99L,      4L,
+       "HiSpeed",    "Running",    44L,      4L,
+        "Super2",      "Trail",   100L,      5L,
+          "Goal",   "Football",   119L,      3L,
+       "Goal2.0",   "Football",    79L,      4L,
+   "Airball Max", "Basketball",    49L,      4L,
+    "Glide Best",    "Running",    55L,      5L,
+  "Outdoor King",      "Trail",   160L,      5L,
+          "G90x",   "Football",   120L,      4L,
+     "Smith Pro",    "Running",    89L,      4L,
+    "Travel Low", "Basketball",    89L,      3L)
+
+```
+:::
+
+## `select()`
+
+::: columns
+::: {.column width="38%"}
+#### Subset variables
+
+- by name  
+- by position  
+- by type  
+:::
+
+::: {.column width="62%"}
+::: {.med-code}
+```{r}
+#| echo: true
+#| eval: true
+sneakers %>% 
+  select(Name, Sport) %>% 
+  head(4)
+```
+:::
+:::
+:::
+
+## `mutate()`
+
+::: columns
+::: {.column width="50%"}
+
+#### Create and modify columns
+
+- create new  
+- overwrite  
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: true
+
+sneakers %>%
+  select(Name, Rating) %>% 
+  mutate(Rating= Rating*2) %>% 
+  head(5)
+```
+:::
+:::
+
+We can control where the new column will appear with `.before` and `.after`
+
+
+## `filter()`
+
+::: columns
+::: {.column width="48%"}
+
+#### Subset rows
+
+- keep rows that meet a condition
+:::
+
+::: {.column width="52%"}
+```{r}
+#| echo: true
+#| eval: true
+sneakers %>% 
+  select(Name, Sport, Rating) %>% 
+  filter(Rating == 5)
+```
+
+:::
+:::
+
+> `filter()` always needs a logical vector to keep/discard rows
+
+```{r}
+sneakers$Rating == 5
+```
+
+
+## Data manipulation challenge
+
+:::{.callout-note}
+##
+Before manipulating data, we need to create our tabular objects
+:::
+
+- Import from files with `readr`
+- Load bundled data from a package with `data()`
+
+## Data manipulation challenge {background-color="#a4c5ff"}
+
+### Import from file
+- Download the `possum.csv` file [here](exampleData/possum.csv)
+- Import the file (using `read_csv()` from `readr`)
+
+### Load from a package
+- load the `openintro` package
+- call a dataset with the `data()` function
+- package datasets often have documentation (`?possum`)
+
+
+## Data manipulation challenge {background-color="#a4c5ff"}
+
+(separate tasks)
+
+- Subset the possum data to keep only males from Victoria and discard the _site_ column
+
+- Add a column with the tail length column in inches 
+
+- Keep only sex, age, and site for females with head length > 91 cm
+
+- Suggest additional manipulations
+
+## tidy data with `tidyr`
+
+![](imgs/widelong.png){fig-align="center"}
+
+::: columns
+::: {.column width="50%"}
+### Wide Data
+Human-readable  
+Easier entry  
+Easier interactive editing
+:::
+
+::: {.column width="50%"}
+### Long Data
+Usually tidy  
+Analysis-ready  
+Maps well to graphic parameters
+:::
+:::
+
+
+## Pivoting data
+
+
+- you may know these operations as `cast`, `melt`, `gather`, or `spread`
+
+![](imgs/pivotingintro.gif)
+  
+## 
+
+<br/>
+wide to long: `pivot_longer()`  
+
+:::{.med-code}
+```{r}
+#| eval: false
+#| echo: true
+ 
+pivot_longer(data, cols, names_to, values_to)
+```
+:::
+<br/>
+long to wide: `pivot_wider()` 
+
+:::{.med-code}
+```{r}
+#| echo: true
+#| eval: false
+ 
+pivot_longer(data, cols,
+             names_from, values_from)
+```
+:::
+##
+
+```{r}
+#| eval: true
+#| echo: false
+
+dining <- 
+tibble::tribble(
+     ~area_type, ~district, ~coffee_shops, ~fast_food, ~fish_chips,
+  "Residential",   "South",            2L,         3L,          1L,
+   "Commercial",   "North",           12L,         6L,          4L,
+     "Suburban",   "South",            2L,         4L,          3L,
+        "Rural",    "East",            0L,         2L,          0L
+  )
+
+```
+
+::: {.panel-tabset}
+## dining
+```{r}
+#| eval: true
+#| echo: false
+
+dining %>% gt() %>% 
+    tab_style(
+    cell_text(size = '24px'),
+    locations = list(cells_body(),
+                     cells_column_labels(everything()),
+                     cells_title())) %>% 
+  tab_options(table.background.color="#f4f4f9")
+```
+
+## Data setup
+```{r panel-chunk-dining}
+#| eval: false
+#| echo: true
+
+dining <- 
+tibble::tribble(
+     ~area_type, ~district, ~coffee_shops, ~fast_food, ~fish_chips,
+  "Residential",   "South",            2L,         3L,          1L,
+   "Commercial",   "North",           12L,         6L,          4L,
+     "Suburban",   "South",            2L,         4L,          3L,
+        "Rural",    "East",            0L,         2L,          0L
+  )
+```
+:::
+
+
+
+
+[Variables:]{style="font-size: 1.2em; text-align: center"}
+
+area type
+
+district
+
+type of resturant
+
+number of restaurants
+
+## Wide to long
+
+```{r}
+#| eval: true
+#| echo: true
+
+dining_long <- dining %>%
+  pivot_longer(
+    cols = c(coffee_shops, fast_food, fish_chips),
+    names_to = "restaurant_type",
+    values_to = "n_restaurants")
+```
+
+```{r}
+#| eval: true
+#| echo: false
+
+dining_long <- dining %>%
+  pivot_longer(
+    cols = c(coffee_shops, fast_food, fish_chips),
+    names_to = "restaurant_type",
+    values_to = "n_restaurants")
+```
+
+
+**`cols`** Which columns have data in their names  
+
+
+**`names_to`** Name for the new column to be created from the names of each `cols`  
+
+**`values_to`** Name of the column to be created from the contents of the cells in **`cols`**  
+
+##
+
+```{r}
+#| eval: false
+#| echo: true
+
+dining %>%
+  pivot_longer(
+    cols = c(coffee_shops, fast_food, fish_chips),
+    names_to = "restaurant_type",
+    values_to = "n_restaurants")
+```
+
+##
+
+```{r}
+#| eval: true
+#| echo: true
+dining %>%
+  pivot_longer(
+    cols = c(coffee_shops, fast_food, fish_chips),
+    names_to = "restaurant_type",
+    values_to = "n_restaurants")
+```
+
+
+
+## Long to wide
+
+```{r}
+#| eval: false
+#| echo: true
+
+dining_long %>% 
+  pivot_wider(names_from = restaurant_type, 
+              values_from = n_restaurants)
+```
+
+
+**`names_from`** Which columns' distinct values will be used for new _column names_
+
+**`values_from`** Which column has the _cell values_ for the new output columns
+
+##
+
+```{r}
+#| eval: true
+#| echo: true
+
+dining_long %>% 
+  pivot_wider(names_from = restaurant_type, 
+              values_from = n_restaurants)
+```
+
+
+## Practice - Pivoting {background-color="#a4c5ff"}
+
+- Load the dataset "**arbuthnot**" bundled with `openintro`
+
+- Identify the data structure and tidy the data
+
+- pivot back to inital structure
+
+## Dates and times with the `lubridate`
+
+::: columns
+::: {.column width="30%"}
+![](imgs/lubridatelogo.png)
+:::
+
+::: {.column width="70%"}
+Working with dates and times (in general, and even in R) can be frustrating
+:::
+:::
+
+
+`lubridate` provides objects and functions for intuitive parsing of dates and times with less ambiguity 
+
+> Easier temporal calculations (e.g. subtract dates, calculate periods of time, etc.)
+
+## 
+
+:::{.med-code}
+```{r}
+library(lubridate)
+# parse from text string to year/month/day
+decdate <-  ymd("2010/12/21") 
+class(decdate)
+year(decdate)
+month(decdate)
+day(decdate)
+ymd("2023-11-20") - decdate
+```
+:::
+
+## Parsing dates {background-color="#a4c5ff"}
+
+- Load the `birds` data from {openintro}
+
+- Examine the **date** column
+
+- Parse the date and create separate columns for month, day, and year
+
+- Put mdy together in a new variable (hint: `make_date` function)
+
+## Factors made easy with `forcats`
+
+### Categorical variables
+::: columns
+::: {.column width="50%"}
+* Fixed set of possible values (levels)
+* Levels can be ordered (very useful for visualization)
+:::
+
+::: {.column width="50%"}
+![](imgs/factor.jpg)
+:::
+:::
+
+
+## Factors
+
+:::{.med-code}
+```{r}
+#| echo: true
+#| output-location: slide
+data(fastfood,package = "openintro")
+head(fastfood)
+```
+:::
+
+## 
+
+Variable as character vector
+
+:::{.big-code}
+```{r}
+#| echo: true
+#| output-location: slide
+fastfood$restaurant
+
+```
+:::
+
+## 
+
+Make into factor
+
+:::{.big-code}
+```{r}
+#| echo: true
+#| output-location: slide
+factor(fastfood$restaurant)
+```
+:::
+
+## 
+
+Query factor levels
+
+:::{.med-code}
+```{r}
+#| echo: true
+levels(factor(fastfood$restaurant))
+```
+:::
+
+> How are the levels ordered?
+
+## Factor levels
+
+We can specify factor levels manually with the `levels` argument
+
+```{r}
+#| echo: true
+newlevels <- c("Mcdonalds","Arbys","Burger King","Subway",
+               "Chick Fil-A","Dairy Queen","Taco Bell","Sonic")
+levels(factor(fastfood$restaurant,levels = newlevels))
+```
+
+## Factors made easy with `forcats` 
+
+::: columns
+::: {.column width="61%"}
+Tools for working with categorical variables
+:::
+
+::: {.column width="38%"}
+![](imgs/forcatslogo.png)
+:::
+:::
+
+- reorder a factor with another variable's values
+- suppress alphabetical ordering
+- reverse factor levels
+- group levels
+
+##
+
+```{r}
+sneakers
+```
+
+
+##
+
+:::{.med-code}
+```{r}
+factor(sneakers$Sport)
+```
+:::
+
+Query levels
+
+:::{.med-code}
+```{r}
+factor(sneakers$Sport) %>% levels()
+```
+:::
+
+##
+
+Keep order of appearance
+
+:::{.med-code}
+```{r}
+library(forcats)
+fct_inorder(sneakers$Sport)
+```
+:::
+
+##
+
+Order by frequency
+
+:::{.med-code}
+```{r}
+fct_infreq(sneakers$Sport)
+```
+:::
+
+##
+
+Reverse order
+
+:::{.med-code}
+```{r}
+fct_rev(sneakers$Sport)
+```
+:::
+
+##
+
+Subset - one shoe per sport
+```{r}
+sneakersSubset <- sneakers %>% slice(1,3,4,6) 
+sneakersSubset
+```
+
+Reorder levels by price
+
+```{r}
+fct_reorder(sneakersSubset$Sport,sneakersSubset$Price)
+```
+
+`.desc` argument for descending order
+
+# Data visualization with `ggplot2`
+
+## Graphics in R
+
+Since its initial release, R has had the ability to produce customizable 
+publication-quality graphics.
+
+- Base R plots 
+- Lattice plots (`lattice` package)
+- `ggplot2`
+- wrapper packages (`highcharter`, `echarts4r`)
+
+::: {style="text-align: right"}
+[4. Graphics with base R](https://intro2r.com/graphics_base_r.html])\  
+An Introduction to R\
+Alex Douglas et al. (2023)
+:::
+
+## 
+
+:::{style="text-align:center"}
+[The Grammar of Graphics](https://link.springer.com/book/10.1007/0-387-28695-0)  
+Wilkinson (1999, 2005)  
+
+[A Layered Grammar of Graphics](ttps://doi.org/10.1198/jcgs.2009.07098)  
+Hadley Wickham (2007)
+:::
+
+::: {layout-nrow=1}
+![](imgs/ggwilk.jpg)
+![](imgs/layered.png){width="20%"}
+![](imgs/ggplot2.png){width="20%"}
+![](imgs/ggpltcht.jpeg){width="20%"}
+:::
+
+## 
+
+**Grammar**: how words and their component parts combine to form sentences
+
+<br/>
+
+- With a grammar we don't need to memorize individual sentences to communicate in a language
+
+- If we learn a grammar for graphics, we can describe and build a wide range of statistical graphics from scratch
+
+
+## Layered graphics
+
+![](imgs/grammar.png){fig-align="center"}
+
+## {background-image="imgs/blocks.jpg"}
+
+### Building a ggplot
+
+<br/>
+
+`data` - object with the data we wish to visualize 
+
+<br/>
+
+`aes` (mapping) - definition of how variables in the dataset are mapped to visual properties (aesthetics) of the plot
+
+<br/>
+
+`geom` - geometrical object that represents data
+
+##
+
+::: {.big-code}
+```{r}
+#| eval: false
+#| echo: true
+ggplot(data, aes(x,y)) +
+  geom_point()
+```
+:::
+
+</br>
+</br>
+`ggplot()` creates the plot  
+
+`aes()` links variables in the data with visual properties of the plot
+
+`geom_*` defines a layer with a visual representation of the data
+
+##
+
+::: panel-tabset
+
+### lizards
+
+```{r}
+#| eval: true
+#| echo: false
+tibble::tribble(
+  ~length, ~mass,     ~stage,
+      9L,   20L,  "adult",
+      8L,   13L, "juvenile",
+      7L,   15L, "juvenile",
+     13L,   18L,  "adult",
+     11L,   21L,  "adult",
+      6L,   14L, "juvenile"
+  ) %>% gt() %>% 
+    tab_style(
+    cell_text(size = '33px'),
+    locations = list(cells_body(),
+                     cells_column_labels(everything()),
+                     cells_title())) %>% 
+  tab_options(table.background.color="#f4f4f9")
+```
+
+### Data
+
+```{r}
+#| eval: false
+#| echo: true
+
+lizards <- 
+tibble::tribble(
+  ~length, ~mass,     ~stage,
+       9L,   20L,    "adult",
+       8L,   13L, "juvenile",
+       7L,   15L, "juvenile",
+      13L,   18L,    "adult",
+      11L,   21L,    "adult",
+       6L,   14L, "juvenile"
+  )
+
+```
+:::
+
+----------------
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: false
+ 
+tibble::tribble(
+  ~length, ~mass,     ~stage,
+       9L,   20L,    "adult",
+       8L,   13L, "juvenile",
+       7L,   15L, "juvenile",
+      13L,   18L,    "adult",
+      11L,   21L,    "adult",
+       6L,   14L, "juvenile"
+  ) %>% gt() %>% tab_style(
+    cell_text(size = '34px'),
+    locations = list(cells_body(),
+                     cells_column_labels(everything()),
+                     cells_title())) %>% 
+  tab_options(table.background.color="#f4f4f9")
+
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+ 
+tibble::tribble(
+   ~x,  ~y,     ~shape,
+   9L, 20L,   "circle",
+   8L, 13L, "triangle",
+   7L, 15L, "triangle",
+  13L, 18L,   "circle",
+  11L, 21L,   "circle",
+   6L, 14L, "triangle"
+  ) %>% gt() %>% tab_style(
+    cell_text(size = '34px'),
+    locations = list(cells_body(),
+                     cells_column_labels(everything()),
+                     cells_title())) %>% 
+  tab_options(table.background.color="#f4f4f9")
+
+```
+:::
+:::
+
+##
+
+```{r}
+#| echo: false
+#| eval: true
+
+lizards <- 
+tibble::tribble(
+  ~length, ~mass,     ~stage,
+       9L,   20L,    "adult",
+       8L,   13L, "juvenile",
+       7L,   15L, "juvenile",
+      13L,   18L,    "adult",
+      11L,   21L,    "adult",
+       6L,   14L, "juvenile"
+  )
+```
+
+
+```{r}
+ggplot(data = lizards,     
+  aes(x = length,y = mass))+
+  geom_point()
+```
+
+# Hands-on  {background-color="#a4c5ff"}
+
+- Open the file  `01_first-plots.R`
+- Follow along
+
+# Customization
+
+We can modify everything that we see in a plot  
+
+::: columns
+::: {.column width="30%"}
+`labs`  
+`fill`  
+`color`  
+`size`  
+`themes`  
+`scale_fill_*`  
+`scale_shape_*`  
+`scale_color_*`  
+:::
+
+::: {.column width="70%"}
+labels for axes, titles, etc.  
+fill colors     
+border colors    
+object sizes  
+preset looks 
+  
+  
+manual control over mappings (color, fill, shape)
+:::
+:::
+
+##
+
+`ggplot2` has built-in defaults for shapes and colors 
+
+
+::: {layout-nrow=1}
+![](imgs/defshapes.png)
+![](imgs/defcols.jpg){width="40%"}
+:::
+
+
+## Non-default colors and shapes
+
+Manual control with vectors (fills, colors, shapes) for the `values` argument of `scale_*_*` functions
+
+
+:::{.med-code}
+```{r}
+#| eval: false
+#| echo: true
+
+ggplot(penguins,
+     aes(x=bill_length_mm,
+         y=flipper_length_mm,
+        shape=species,color=species))+
+ geom_point()+
+ scale_color_manual(values=
+              c('pink','blue',"red"))+
+ scale_shape_manual(values=
+              c(20,21,22))
+
+```
+:::
+
+## Colors
+
+HTML names
+
+::: {layout-nrow=1}
+![](https://kktg.net/sgr/wp-content/uploads/colors2.png){width="44%"}
+![](https://kktg.net/sgr/wp-content/uploads/colors4.png){width="44%"}
+:::
+
+## Colors
+
+Hex codes
+
+![](imgs/hexpals.png){fig-align="center"}
+
+Free Color Picker (Windows); Gpick (Linux); ColorSlurp (Mac)
+
+
+## Color palettes
+
+::: columns
+::: {.column width="50%"}
+- Specify a named palette  
+- Define with a vector
+:::
+
+::: {.column width="50%"}
+![](imgs/ejemplocool.png){fig-align="center"}
+:::
+:::
+
+🔗 Example gallery for [`paletteer`](https://pmassicotte.github.io/paletteer_gallery/)  
+
+🔗 [Pokepalettes](https://pokepalettes.com/)
+
+## Legend titles
+
+The `name` arguments modifies the title for legends created automatically for each mapping  
+
+:::{.med-code}
+```{r}
+#| eval: false
+#| echo: true
+
+aes(x,y, color = var1, shape = var2)+
+	scale_color_manual(values=c('red','blue'), 
+	                   name= 'Variable One')+
+  scale_shape_manual(values=c(20,21),
+	                   name = 'Variable Two')
+	
+
+```
+
+:::
+
+## *Quantitative* variables + color:  
+
+- Default color ramp or named gradient
+- Define gradient with `scale_x_gradient` 
+
+```{r}
+#| eval: true
+#| echo: false
+library(palmerpenguins)
+data(penguins)
+```
+
+```{r}
+#| echo: true
+#| output-location: column-fragment
+
+ggplot(penguins,
+  aes(x=bill_length_mm,
+      y=flipper_length_mm,
+      fill=body_mass_g))+
+  geom_point(size=4,
+             color="white",
+             pch=21)
+```
+
+## Hands-on: Customization  {background-color="#a4c5ff"}
+
+Modifying graphical parameters
+
+:::{style="font-size: 1.5em;"}
+`02_customizing.R`{style="color:orange"}  
+:::
+
+## Themes 
+
+Control multiple visual parameters without altering the underlying data
+
+- 8 themes available with `ggplot2`  
+- packages with additional themes: [`ggthemes`](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/), [`artyfarty`](https://datarootsio.github.io/artyfarty/articles/introduction.html), [`hrbrthemes`](https://github.com/hrbrmstr/hrbrthemes)`  
+- create our own
+
+![](imgs/themesgg.png){width="60%"}
+
+## Color ramps
+
+- More accurate visual perception of central value and increments of the underlying variables
+
+![](imgs/batlow.png){fig-align="center" fig-size="80%"}
+  
+:::{style="text-align:center"}  
+🔗 Fabio Crameri - [Scientific Color Maps](https://www.fabiocrameri.ch/colourmaps/)
+:::
+
+## Perceptually uniform color ramps
+
+::: columns
+::: {.column width="45%"}
+![](imgs/viridis-scales.png){width="65%"}
+![](imgs/scicopals.png){width="65%"}
+:::
+
+::: {.column width="55%"}
+### viridis
+- installed with `ggplot2`
+- call with `scale_x_viridis()`  
+  
+### scico
+- provided by `scico` package
+- divergent & sequential
+:::
+:::
+
+## Hands-on: Color ramps {background-color="#a4c5ff"}
+
+Colors and continuous variables
+
+:::{style="font-size: 1.5em;"}
+`03_ramps.R`{style="color:orange"}  
+:::
+
+
+## Exporting graphics
+
+### Our options
+
+- 'Export' button in RStudio
+- Graphical devices
+- `ggsave()`  
+- Formats: png, jpg, pdf, etc.
+
+## Export with graphical device
+
+:::{.callout-note}
+## 
+We can asign plots to workspace objects
+:::
+
+```{r}
+#| echo: true
+#| eval: false
+
+my_plot <- 
+ggplot(penguins,
+       aes(x=bill_length_mm,
+          y=flipper_length_mm))+
+  geom_point(size=2,pch=21)
+
+png(filename = "myplot.png",
+    width = 10, 
+    height = 10,
+    units ="cm",
+    res = 200)
+my_plot
+dev.off()
+```
+
+## `agg` devices
+
+- Fast and crisp
+- Provided with `ragg`
+
+::: {.med-code}
+```{r}
+#| echo: true
+#| eval: false
+
+agg_png(filename = "myraggplot.png",
+    width = 10, height = 10,
+    units ="cm",
+    res = 200)
+my_plot
+dev.off()
+```
+:::
+
+## `ggsave()`
+
+- Will use `ragg` if it is installed
+
+::: {.big-code}
+```{r}
+#| echo: true
+#| eval: false
+
+ggsave(my_plot, 
+  filename = "myplotgs.png",
+    width = 10, 
+    height = 10,
+    units ="cm",
+    dpi = 200)
+
+```
+:::
+
+## Looks off?
+
+![](imgs/exportando.png)
+
+`scale` argument for `ggsave()` and `scaling` in `ragg` devices will adjust points and text with a scaling factor
+
+
+## Facetting
+
+![](imgs/exprgutsoct2021_final.png){fig-align="center"}
+
+## Facet functions
+
+`facet_wrap()`{style="color:orange" size=1.2em} splits by one variable and wraps the resulting subplots
+
+`facet_grid()`{style="color:orange" size=1.2em} splits by combinations of variables
+
+![](imgs/position-facets.png){fig-align="center"}
+
+## Hands-on: Facets {background-color="#a4c5ff"}
+
+`starbucks ` coffee shop data from `openintro`
+
+:::{style="font-size: 1.5em;"}
+`04_facets.R`{style="color:orange"}  
+:::
+
+
+## Factors and plots
+
+Values for categorical variables will be ordered alphabetically unless specified otherwise
+
+```{r}
+#| echo: false
+#| eval: true
+
+data("starbucks",package = "openintro")
+```
+
+
+```{r}
+#| echo: true
+#| eval: true
+ggplot(starbucks,aes(fat,protein))+
+  geom_point()+facet_wrap("type")
+```
+
+
+## Hands-on: Reordering factor levels {background-color="#a4c5ff"}
+
+`babies_crawl` crawling age data from `openintro`
+
+:::{style="font-size: 1.5em;"}
+`05_reorder.R`{style="color:orange"}  
+:::
+
+:::{.callout-note}
+## 
+Crawling age (weeks) in relation to temperature and birth month. From Benson (1993).
+:::
+
+
+## Questions?
+
+# Thank you!

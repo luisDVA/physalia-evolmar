@@ -1,0 +1,8 @@
+---
+title: "Hands-On Data Manipulation and Visualization with the tidyverse and ggplot2"
+toc: false
+---
+
+# Course slides
+
+[Quarto slide deck](slides/evolmar-tidyverse.qmd)
